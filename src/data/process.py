@@ -7,20 +7,41 @@ text cleaning and processing
 import functools
 import re
 
+# third party
+# -- unused, in preparation for later, use case: identifying the best replacement
+#    for typos
+# import hunspell
+# import textacy
+
+
 #-- Definitions -----------------------------------------------------------------
 def compose(*functions):
     return functools.reduce(lambda f, g: lambda x: f(g(x)), functions, lambda x: x)
 
-letters = functools.partial(re.sub, r"[^a-z ]", "")
-spaces  = functools.partial(re.sub, r"s{2,}", " ")
-clean = compose(letters, spaces, str.lower)
+# -- cleaning
+letters    = functools.partial(re.sub, r"[^a-z ]", "")
+spaces     = functools.partial(re.sub, r"\s{2,}", " ")
+singletons = functools.partial(re.sub, r" [a-z]? ", "")
+unlines    = lambda x: x.replace('\n', '')
+domainbias = functools.partial(re.sub, r"\b(product[s].*|good[s].*)\b", "")
 
-# rewrite me
-def select(descs : [str], model : spacy.lang) -> str:
-    """select the primary (here: first) target of the description"""
+clean = compose( domainbias
+               , letters
+               , spaces
+               , singletons
+               , unlines
+               , str.strip
+               , str.lower  # --TODO: breaks NER
+               )
 
-    for desc in descs:
-        for token in model(desc):
-            if (token.pos_ == 'NOUN')&(token.is_alpha):
-                yield token.lemma_
-    yield ''
+
+# -- parsing
+roots = lambda tokens: [i for i in filter (lambda x: x.dep_ == "ROOT", tokens)]
+first = lambda list: list[0]
+lemma = lambda x: x.lemma_
+
+parse = compose( lemma
+               , first
+               , roots
+               )
+
