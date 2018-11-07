@@ -1,4 +1,4 @@
-# chatter
+# woffle
 
 Testing alternative techniques, libraries and functions for
 [optimus](https://github.com/datasciencecampus/optimus).

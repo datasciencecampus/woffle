@@ -44,4 +44,3 @@ parse = compose( lemma
                , first
                , roots
                )
-
