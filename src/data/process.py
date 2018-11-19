@@ -15,8 +15,8 @@ import re
 
 
 #-- Definitions -----------------------------------------------------------------
-def compose(*functions):
-    return functools.reduce(lambda f, g: lambda x: f(g(x)), functions, lambda x: x)
+#+NOTE: application order is last argument through to first
+compose = lambda fs: functools.reduce(lambda f, g: lambda x: f(g(x)), fs, lambda x: x)
 
 # -- cleaning
 letters    = functools.partial(re.sub, r"[^a-z ]", "")
@@ -25,20 +25,22 @@ singletons = functools.partial(re.sub, r" [a-z]? ", "")
 unlines    = lambda x: x.replace('\n', '')
 domainbias = functools.partial(re.sub, r"\b(product[s].*|good[s].*)\b", "")
 
+
+# -- parsing
+roots = lambda tokens: [i for i in filter (lambda x: x.dep_ == "ROOT", tokens)]
+first = lambda list: list[0]
+lemma = lambda x: x.lemma_
+
+
+#-- Composition -----------------------------------------------------------------
 clean = compose( domainbias
                , letters
                , spaces
                , singletons
                , unlines
                , str.strip
-               , str.lower  # --TODO: breaks NER
+               #, str.lower  # --TODO: breaks NER
                )
-
-
-# -- parsing
-roots = lambda tokens: [i for i in filter (lambda x: x.dep_ == "ROOT", tokens)]
-first = lambda list: list[0]
-lemma = lambda x: x.lemma_
 
 parse = compose( lemma
                , first
