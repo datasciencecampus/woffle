@@ -5,7 +5,7 @@
 
 * Introduction
 
-Testing alternative techniques, libraries and functions for [optimus](https://github.com/datasciencecampus/optimus).
+Testing alternative techniques, libraries and functions for [[https://github.com/datasciencecampus/optimus][o p t i m u s]].
 
 Nothing much to see here. If you do wish to use the program just dump your data
 into `data` (cunning huh?) and then change line 20 to reflect the name of your

@@ -3,6 +3,7 @@
 local -a help all py ft
 zparseopts h=help      -help=help\
            a=all       -all=all\
+           A=almostall -almostall=almostall\
            p=py        -py=py\
            f=fasttext  -fasttext=fasttext\
            d=ftdl      -ftdl=ftdl\
@@ -24,6 +25,7 @@ help () {
       -s --spacy      install spacy - includes models download
 
       -a --all        do everything
+      -A --almostall  do everything except download the 9GB fasttext file
   "
 }
 
@@ -85,6 +87,13 @@ all () {
   spacy
 }
 
+almostall () {
+  py
+  fasttext
+  flair
+  spacy
+}
+
 
 #-- Runtime ---------------------------------------------------------------------
 echo "-- If any errors occur during installation please check setup.log"
@@ -95,9 +104,11 @@ echo "-- If any errors occur during installation please check setup.log"
 [[ -n $flair     ]] && flair
 [[ -n $spacy     ]] && spacy
 [[ -n $all       ]] && all
+[[ -n $almostall ]] && almostall
 
 # catch all for no arguments -- prints help
-[[ -z $(echo $py $fasttext $ftdl $flair $spacy $all) || -n $help ]] && help
+[[ -z $(echo $py $fasttext $ftdl $flair $spacy $all\
+             $almostall) || -n $help ]] && help
 
 # remove the log on successful completion
 [[ -a setup.log ]] && echo "** Cleaning up installation" && rm setup.log
