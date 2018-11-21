@@ -13,13 +13,14 @@ input dataset. This data should be one description per line. Processed data will
 be in `output`.
 
 
-** TODO [60%]:
+** TODO [42%]:
 - [X] Restructure code to facilitate common interface for the model based side of things
 - [X] Incorporate travisCI
 - [X] Replace requirements.txt with a shell script to allow installation of preferred models
 - [ ] Porting optimus
 - [ ] Adding new things
-
+- [ ] Documentation on existing functionality
+- [ ] Documentation on how to write new back ends
 
 
 ** Bucket list [0/1]:
