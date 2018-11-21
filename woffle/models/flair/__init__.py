@@ -1,10 +1,15 @@
 """
-Implementation of flair as the back end for NER and POS functionality
+flair interface
 """
 
 #-- Imports ---------------------------------------------------------------------
+# third party
 import flair
 
+# project
+from .parse  import parse
+from .embed  import embed
+from .select import select
 
 #-- Definitions -----------------------------------------------------------------
 pos = lambda x: x
@@ -16,6 +21,7 @@ ner = lambda x: x
 # cpu friendly ner-ontonotes-fast
 
 # examples/play
+"""
 import flair
 
 sentence = flair.data.Sentence("chocolate")
@@ -30,3 +36,4 @@ model.embed(sentence)
 print(sentence.to_tagged_string())
 for entity in sentence:
     print(entity.embedding)
+"""

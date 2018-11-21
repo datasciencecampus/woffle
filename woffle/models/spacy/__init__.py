@@ -1,7 +1,5 @@
 """
-spaCy back end
-
-includes the common functions for NLP in the spaCy way
+spaCy interface
 """
 
 #-- Imports ---------------------------------------------------------------------
