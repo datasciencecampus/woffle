@@ -4,9 +4,10 @@ classification of free text descriptions
 
 #-- Imports ---------------------------------------------------------------------
 
-# Project specific
-from woffle        import data
-from woffle.models import spacy as model
+# Project
+from woffle                   import data
+from woffle.functions.compose import compose
+from woffle.models            import spacy   as model
 
 
 #-- Definitions -----------------------------------------------------------------
