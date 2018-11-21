@@ -16,7 +16,8 @@ import re
 
 #-- Definitions -----------------------------------------------------------------
 #+NOTE: application order is last argument through to first
-compose = lambda fs: functools.reduce(lambda f, g: lambda x: f(g(x)), fs, lambda x: x)
+def compose(*functions):
+    return functools.reduce(lambda f, g: lambda x: f(g(x)), functions, lambda x: x)
 
 # -- cleaning
 letters    = functools.partial(re.sub, r"[^a-z ]", "")
@@ -39,7 +40,7 @@ clean = compose( domainbias
                , singletons
                , unlines
                , str.strip
-               #, str.lower  # --TODO: breaks NER
+               , str.lower  # --TODO: breaks NER
                )
 
 parse = compose( lemma

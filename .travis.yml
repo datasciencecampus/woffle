@@ -1,0 +1,11 @@
+language: python
+python:
+  - "3.6"
+  - "3.7"
+install:
+  - ./setup.zsh -a
+# check all branches
+branches:
+  only:
+  - gh-pages
+  - /.*/
