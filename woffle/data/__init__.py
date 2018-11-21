@@ -1,1 +1,1 @@
-from .process import clean, parse
+from .parse import parse

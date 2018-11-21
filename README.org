@@ -13,7 +13,14 @@ input dataset. This data should be one description per line. Processed data will
 be in `output`.
 
 
-** WIP [0%]:
-- [ ] Restructure code to facilitate common interface for the model based side of things
-- [ ] Incorporate travisCI
-- [ ] Replace requirements.txt with a shell script to allow installation of preferred models
+** TODO [60%]:
+- [X] Restructure code to facilitate common interface for the model based side of things
+- [X] Incorporate travisCI
+- [X] Replace requirements.txt with a shell script to allow installation of preferred models
+- [ ] Porting optimus
+- [ ] Adding new things
+
+
+
+** Bucket list [0/1]:
+- [ ] Add python 3.7 to travis build

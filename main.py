@@ -17,19 +17,13 @@ def main():
     if not text:
         raise ValueError("No descriptions to process")
 
-    cleaned = [data.clean(line) for line in text]
+    cleaned = [data.parse(line) for line in text]
     corpus  = [model.nlp(line) for line in cleaned]
-    parsed  = [data.parse(doc) for doc in corpus]
+    target = [word if word in model.nlp.vocab else None for word in cleaned]
+    pairs = [(i,j) for i, j in zip(text, target)]
 
-    target = [word if word in nlp.vocab else None for word in parsed]
+    print(pairs)
 
-
-
-    # TODO: rewrite this mess
-    with open('output/test.csv', 'w+') as file:
-        file.write("original,label\n")
-        for i,j in zip(text, target):
-            file.write(f"{i},{j}" + '\n')
 
 
 #-- Boilerplate -----------------------------------------------------------------
