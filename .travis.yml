@@ -17,9 +17,8 @@ install:
 # check all branches
 branches:
   only:
-#  - gh-pages
-#  - /.*/
-    - develop
+#    - gh-pages
+    - /.*/
 
 # skip tests for now
 script:
