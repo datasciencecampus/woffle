@@ -11,4 +11,14 @@ from woffle.functions.compose import compose
 
 
 #-- Definitions -----------------------------------------------------------------
-parse = lambda x: x
+roots = lambda tokens: [i for i in filter (lambda x: x.dep_ == "ROOT", tokens)]
+#+TODO: first is here for when you don't want to/cannot do NER, currently there
+#       no NER so it is the default target selector
+first = lambda list: list[0]
+lemma = lambda x: x.lemma_
+
+process = lambda x: nlp(x)
+
+
+# rewrite me
+parse = process

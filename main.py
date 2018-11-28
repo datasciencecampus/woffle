@@ -12,7 +12,11 @@ from woffle.models            import spacy   as model
 
 #-- Definitions -----------------------------------------------------------------
 def main():
-
+    """
+    This function is where you build your own pipeline from the parts that are
+    available in this module. Please see the example below for how to do this
+    or RTFM
+    """
 
     # load your data
     fp = 'data/test.txt'
@@ -26,7 +30,6 @@ def main():
                    , data.parse
                    )
 
-
     cleaned = [data.parse(line) for line in text]
     corpus  = [model.nlp(line) for line in cleaned]
     target = [word if word in model.nlp.vocab else None for word in cleaned]
@@ -39,3 +42,5 @@ def main():
 #-- Boilerplate -----------------------------------------------------------------
 if __name__ == '__main__':
     main()
+
+roots = lambda tokens: [i for i in filter (lambda x: x.dep_ == "ROOT", tokens)]

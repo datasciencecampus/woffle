@@ -13,6 +13,9 @@ from woffle.functions.compose import compose
 
 #-- Definitions -----------------------------------------------------------------
 #-- cleaning
+#NOTE: all functions are endomorphic String -> String so their composition does
+#      not need to be tested
+
 letters    = functools.partial(re.sub, r"[^a-z ]", "")
 spaces     = functools.partial(re.sub, r"\s{2,}", " ")
 singletons = functools.partial(re.sub, r" [a-z]? ", "")

@@ -22,4 +22,4 @@ branches:
 
 # skip tests for now
 script:
-  - echo "skipping tests"
+  - pytest
