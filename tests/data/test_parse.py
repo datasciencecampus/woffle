@@ -14,3 +14,6 @@ def test_singletons():
 
 def test_unlines():
     assert unlines('\n\n\n\n') == ''
+
+def test_domainbias():
+    assert domainbias('test products goods') == 'test'
