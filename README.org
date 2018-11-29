@@ -1,27 +1,15 @@
 #+TITLE: woffle
 #+AUTHOR: karetsu
 
-[[https://travis-ci.com/karetsu/woffle.svg?branch=master]]
+[[https://travis-ci.com/karetsu/woffle.svg?branch=develop]]
 
 * Introduction
 
-Testing alternative techniques, libraries and functions for [[https://github.com/datasciencecampus/optimus][o p t i m u s]].
+Developing the future of [[https://github.com/datasciencecampus/optimus][optimus]].
 
-Nothing much to see here. If you do wish to use the program just dump your data
+
+Nothing much to see here, yet. If you do wish to use the program just dump your data
 into `data` (cunning huh?) and then change line 20 to reflect the name of your
 input dataset. This data should be one description per line. Processed data will
-be in `output`.
-
-
-** TODO [42%]:
-- [X] Restructure code to facilitate common interface for the model based side of things
-- [X] Incorporate travisCI
-- [X] Replace requirements.txt with a shell script to allow installation of preferred models
-- [ ] Porting optimus
-- [ ] Adding new things
-- [ ] Documentation on existing functionality
-- [ ] Documentation on how to write new back ends
-
-
-** Bucket list [0/1]:
-- [ ] Add python 3.7 to travis build
+be in `output`. Instructions for further use and how to implement your own model
+will be added to the wiki in due time.
