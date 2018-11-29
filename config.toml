@@ -1,0 +1,5 @@
+[spacy]
+model='en_core_web_md'
+
+[fasttext]
+model='wiki.en.zip'
