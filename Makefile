@@ -20,13 +20,12 @@ END=⌁ \${BOLD}${GREEN}COMPLETE:${NONE}
 
 #-- General ---------------------------------------------------------------------
 .PHONY: all almost py test ft flair spacy
-all: py ft ftmodel flair spacy
-almost: py ft flair spacy
+all: clean py ft ftmodel flair spacy
+almost: clean py ft flair spacy
 
 clean:
 	@printf "${START} Cleaning"
-	@find . -name '__pycache__' -exec rm -rf {} +
-	@sleep 4
+	@find . -name '__pycache__' -or -name '*.log' -exec rm -rf {} +
 	@printf "\r${END} clean  \n"
 
 dist-clean:
@@ -49,7 +48,7 @@ run:
 py:
 	@printf "${START} Installing: python environment"
 	@pip install -r requirements.txt 1>$(LOGFILE)
-	@printf "\r${END} python environment\n"
+	@printf "\r${END} python environment    \n"
 
 ft:
 	@printf "${START} Installing: fasttext"
@@ -57,34 +56,34 @@ ft:
 	@git clone https://github.com/facebookresearch/fasttext 1>/dev/null 2>&1
 	@pip install fasttext 1>$(LOGFILE)
 	@cd ../ && rm -rf fasttext 1>$(LOGFILE)
-	@printf "\r${END} fasttext\n"
+	@printf "\r${END} fasttext     \n"
 
 ftmodel:
 	@printf "${START} Installing: download fasttext model"
 	@cd models
 	@curl -o wiki.en.zip https://s3-us-west-1.amazonaws.com/fasttext-vectors/wiki.en.zip
 	@cd ../
-	@printf "\r${END} download fasttext model\n"
+	@printf "\r${END} download fasttext model    \n"
 
 flair:
 	@printf "${START} Installing: flair"
 	@pip install flair 1>$(LOGFILE)
-	@python -c "import flair;flair.models.SequenceTagger.load('ner')" 1>$(LOGFILE) 2>&1
-	@python -c "import flair;flair.models.SequenceTagger.load('pos')" 1>$(LOGFILE) 2>&1
-	@python -c "import flair;flair.embeddings.WordEmbeddings('en-news')" 1>$(LOGFILE) 2>&1
-	@printf "\r${END} flair\n"
+	@python -c "import flair;flair.models.SequenceTagger.load('ner')" 1>>$(LOGFILE) 2>&1
+	@python -c "import flair;flair.models.SequenceTagger.load('pos')" 1>>$(LOGFILE) 2>&1
+	@python -c "import flair;flair.embeddings.WordEmbeddings('en-news')" 1>>$(LOGFILE) 2>&1
+	@printf "\r${END} flair    \n"
 
 # for those without a GPU
 flair-fast:
 	@printf "${START} Installing: flair-fast"
-	@python -c "import flair;flair.models.SequenceTagger('ner-fast')" 1>$(LOGFILE) 2>&1
-	@python -c "import flair;flair.models.SequenceTagger('pos-fast')" 1>$(LOGFILE) 2>&1
-	@printf "\r${END} flair-fast\n"
+	@python -c "import flair;flair.models.SequenceTagger('ner-fast')" 1>>$(LOGFILE) 2>&1
+	@python -c "import flair;flair.models.SequenceTagger('pos-fast')" 1>>$(LOGFILE) 2>&1
+	@printf "\r${END} flair-fast    \n"
 
 spacy:
 	@printf "${START} Installing: spacy"
-	@pip install spacy 1>$(LOGFILE)
-	@python -m spacy download en_core_web_sm  1>$(LOGFILE)
-	@printf "\r${END} spacy\n"
+	@pip install spacy 1>>$(LOGFILE)
+	@python -m spacy download en_core_web_sm  1>>$(LOGFILE)
+	@printf "\r${END} spacy    \n"
 
 # end
