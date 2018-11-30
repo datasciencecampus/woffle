@@ -67,7 +67,7 @@ ftmodel:
 
 flair:
 	@printf "${START} Installing: flair"
-	@pip install flair 1>$(LOGFILE)
+	@pip install flair 1>>$(LOGFILE)
 	@python -c "import flair;flair.models.SequenceTagger.load('ner')" 1>>$(LOGFILE) 2>&1
 	@python -c "import flair;flair.models.SequenceTagger.load('pos')" 1>>$(LOGFILE) 2>&1
 	@python -c "import flair;flair.embeddings.WordEmbeddings('en-news')" 1>>$(LOGFILE) 2>&1
