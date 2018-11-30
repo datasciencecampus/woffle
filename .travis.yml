@@ -13,7 +13,8 @@ addons:
 
 # do the install, but only almost all because otherwise it takes hours
 install:
-  - make
+    - pip install -U setuptools
+    - make
 
 # check all branches
 branches:
