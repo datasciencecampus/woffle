@@ -42,5 +42,3 @@ def main():
 #-- Boilerplate -----------------------------------------------------------------
 if __name__ == '__main__':
     main()
-
-roots = lambda tokens: [i for i in filter (lambda x: x.dep_ == "ROOT", tokens)]
