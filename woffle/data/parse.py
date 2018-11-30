@@ -18,7 +18,7 @@ from woffle.functions.compose import compose
 
 letters    = functools.partial(re.sub, r"[^a-z ]", "")
 spaces     = functools.partial(re.sub, r"\s{2,}", " ")
-singletons = functools.partial(re.sub, r" [a-z]? ", "")
+singles    = functools.partial(re.sub, r" [a-z]? ", "")
 unlines    = lambda x: x.replace('\n', '')
 domainbias = functools.partial(re.sub, r"\s?\b(product[s].*|good[s].*\s?)\b", "")
 
@@ -27,7 +27,7 @@ domainbias = functools.partial(re.sub, r"\s?\b(product[s].*|good[s].*\s?)\b", ""
 parse = compose( domainbias
                , letters
                , spaces
-               , singletons
+               , singles
                , unlines
                , str.strip
                , str.lower  # --TODO: breaks NER
