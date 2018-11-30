@@ -9,8 +9,8 @@ def test_letters():
 def test_spaces():
     assert spaces('  ') == ' '
 
-def test_singletons():
-    assert singletons(' x ') == ''
+def test_singles():
+    assert singles(' x ') == ''
 
 def test_unlines():
     assert unlines('\n\n\n\n') == ''
