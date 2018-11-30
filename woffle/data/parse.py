@@ -16,7 +16,7 @@ from woffle.functions.compose import compose
 #NOTE: all functions are endomorphic String -> String so their composition does
 #      not need to be tested
 
-letters    = functools.partial(re.sub, r"[^a-z ]", "")
+letters    = functools.partial(re.sub, r"[^a-zA-Z ]", "")
 spaces     = functools.partial(re.sub, r"\s{2,}", " ")
 singles    = functools.partial(re.sub, r"\s*\b[a-zA-Z].?\b\s*", "")
 unlines    = lambda x: x.replace('\n', '')
