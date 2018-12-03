@@ -1,14 +1,11 @@
 """
-spaCy interface
+embedding
 """
 
 #-- Imports ---------------------------------------------------------------------
-import spacy
-
-from .parse  import parse
-from .embed  import embed
-from .select import select
+# project
+from woffle.functions.compose import id
 
 
 #-- Definitions -----------------------------------------------------------------
-activated  = spacy.prefer_gpu()
+embed = id

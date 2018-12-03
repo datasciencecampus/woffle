@@ -1,1 +1,2 @@
-from .parse import parse
+from .parse   import parse
+from .embed   import embed

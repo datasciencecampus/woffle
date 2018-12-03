@@ -9,18 +9,19 @@ addons:
     packages:
       - zsh
       - unzip
+      - make
 
 # do the install, but only almost all because otherwise it takes hours
 install:
-  - ./setup.zsh -A
+    - pip install -U setuptools
+    - make
 
 # check all branches
 branches:
   only:
-#  - gh-pages
-#  - /.*/
-    - develop
+#    - gh-pages
+    - /.*/
 
 # skip tests for now
 script:
-  - echo "skipping tests"
+  - make test
