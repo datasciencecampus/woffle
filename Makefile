@@ -52,7 +52,7 @@ py:
 
 ft:
 	@printf "${START} Installing: fasttext"
-	@rm -rf ./fasttext | /bin/true
+	@rm -rf ./fasttext | true
 	@git clone https://github.com/facebookresearch/fasttext 1>/dev/null 2>&1
 	@cd fasttext && pip install . 1>$(LOGFILE)
 	@cd ../ && rm -rf fasttext 1>$(LOGFILE)
