@@ -3,13 +3,40 @@
 
 [[https://travis-ci.com/karetsu/woffle.svg?branch=develop]]
 
+Please note that this is an active project so some of the instructions are
+incomplete and may not yet work. If you find one and there is not an issue
+already raised for it then please do so. PRs welcome.
+
 * Introduction
+[https://github.com/datasciencecampus/optimus
 
-Developing the future of [[https://github.com/datasciencecampus/optimus][optimus]].
+
+* Installation
+This program is intended for use on modern linux and macOS operating systems. If
+you wish to use it on Windows then please see the Windows [[https://github.com/karetsu/woffle/tree/windows][branch]].
 
 
-Nothing much to see here, yet. If you do wish to use the program just dump your data
-into `data` (cunning huh?) and then change line 20 to reflect the name of your
-input dataset. This data should be one description per line. Processed data will
-be in `output`. Instructions for further use and how to implement your own model
-will be added to the wiki in due time.
+* Usage
+ The intention of this repo is to provide a working example from which to base
+ your own processing. The minimum example in order to clean text using spacy to
+ identify nouns and performing simple regex is
+
+ #+BEGIN_SRC python
+from woffle                   import data
+from woffle.functions.compose import compose
+from woffle.models            import spacy   as model
+
+fp = 'data/test.txt'
+text = [i.replace('\n','') for i in open(fp, 'r').readlines()]
+
+clean = compose(model.parse, data.parse)
+cleaned = [clean(line) for line in text]
+
+for i, j in zip(text, cleaned):
+    print(f"{i} -> {j}")
+ #+END_SRC
+
+ For a more complex example which also incorporates text embedding, clustering
+ and relabelling clusters see ~main.py~.
+
+ If you wish to build your own back end then please see the instructions on the [[https://karetsu.github.io/woffle][website]].

@@ -30,7 +30,7 @@ def main():
                    , data.parse
                    )
 
-    cleaned = [data.parse(line) for line in text]
+    cleaned = [clean(line) for line in text]
     corpus  = [model.nlp(line) for line in cleaned]
     target = [word if word in model.nlp.vocab else None for word in cleaned]
     pairs = [(i,j) for i, j in zip(text, target)]
