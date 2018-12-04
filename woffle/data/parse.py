@@ -14,7 +14,7 @@ from woffle.functions.compose import compose
 #-- Definitions -----------------------------------------------------------------
 #-- cleaning
 #NOTE: all functions are endomorphic String -> String so their composition does
-#      not need to be tested
+#      not need to be tested and they can be composed in any order
 
 letters    = functools.partial(re.sub, r"[^a-zA-Z ]", "")
 spaces     = functools.partial(re.sub, r"\s{2,}", " ")
@@ -30,5 +30,4 @@ parse = compose( domainbias
                , singles
                , unlines
                , str.strip
-               , str.lower  # --TODO: breaks NER
                )

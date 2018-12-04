@@ -21,22 +21,14 @@ def main():
     # load your data
     fp = 'data/test.txt'
     text = [i.replace('\n','') for i in open(fp, 'r').readlines()]
-    if not text:
-        raise ValueError("No descriptions to process")
-
 
     # compose your cleaning functions
-    clean = compose( model.parse
-                   , data.parse
-                   )
+    clean = compose(model.parse, data.parse)
+    target = [clean(line) for line in text]
+    pairs = [(i, j) for i, j in zip(text, target)]
 
-    cleaned = [clean(line) for line in text]
-    corpus  = [model.nlp(line) for line in cleaned]
-    target = [word if word in model.nlp.vocab else None for word in cleaned]
-    pairs = [(i,j) for i, j in zip(text, target)]
-
-    print(pairs)
-
+    for o, t in pairs:
+        print(f"{o:>30s}: {t}")
 
 
 #-- Boilerplate -----------------------------------------------------------------

@@ -15,7 +15,7 @@ from woffle.functions.compose import compose
 
 
 #-- Definitions -----------------------------------------------------------------
-config = toml.load('config.toml')
+config = toml.load('config.ini')
 # load the spacy model
 proc = spacy.load(config['spacy']['model'])
 

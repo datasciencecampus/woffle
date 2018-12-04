@@ -16,7 +16,7 @@ from woffle.functions.compose import compose
 
 
 #-- Definitions -----------------------------------------------------------------
-config = toml.load('config.toml')
+config = toml.load('config.ini')
 # load the spacy model
 proc = spacy.load(config['spacy']['model'])
 
@@ -28,7 +28,7 @@ first = lambda list: list[0]
 lemma = lambda x: x.lemma_
 
 process = lambda x: proc(x)
-
+vocab = lambda x: x if x in proc.vocab else None
 
 # rewrite me
-parse = compose(lemma, first, roots, process)
+parse = compose(vocab, lemma, first, roots, process)
