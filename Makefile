@@ -47,22 +47,17 @@ run:
 #-- Package installation --------------------------------------------------------
 py:
 	@printf "${START} Installing: python environment"
-	@pip install -r requirements.txt 1>$(LOGFILE)
+	@pip install -r requirements.txt 1>>$(LOGFILE)
 	@printf "\r${END} python environment    \n"
 
 ft:
 	@printf "${START} Installing: fasttext"
-	@rm -rf ./fasttext | true
-	@git clone https://github.com/facebookresearch/fasttext 1>/dev/null 2>&1
-	@cd fasttext && pip install . 1>$(LOGFILE)
-	@cd ../ && rm -rf fasttext 1>$(LOGFILE)
+	@pip install git+git://github.com/facebookresearch/fasttext.git 1>>$(LOGFILE)
 	@printf "\r${END} fasttext     \n"
 
 ftmodel:
 	@printf "${START} Installing: download fasttext model"
-	@cd models
-	@curl -o wiki.en.zip https://s3-us-west-1.amazonaws.com/fasttext-vectors/wiki.en.zip
-	@cd ../
+	@curl -o models/wiki.en.zip https://s3-us-west-1.amazonaws.com/fasttext-vectors/wiki.en.zip
 	@printf "\r${END} download fasttext model    \n"
 
 flair:

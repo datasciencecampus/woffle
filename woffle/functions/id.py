@@ -1,11 +1,11 @@
 """
-embedding
+Identity functions for different types (for use with typing)
 """
 
 #-- Imports ---------------------------------------------------------------------
-# project
-from woffle.functions.id import id
-
+from typing import Any
 
 #-- Definitions -----------------------------------------------------------------
-embed = id
+# polymorphic
+def id(x : Any) -> Any:
+    return x
