@@ -34,7 +34,7 @@ dist-clean:
 	@printf "\r${END} dist-clean   \n"
 
 test: clean
-	@printf "${START} Testing"
+	@printf "${START} Testing\n"
 	@pytest --color=yes $(TEST_PATH)
 	@printf "${END} testing\n"
 
@@ -71,8 +71,8 @@ flair:
 # for those without a GPU
 flair-fast:
 	@printf "${START} Installing: flair-fast"
-	@python -c "import flair;flair.models.SequenceTagger('ner-fast')" 1>>$(LOGFILE) 2>&1
-	@python -c "import flair;flair.models.SequenceTagger('pos-fast')" 1>>$(LOGFILE) 2>&1
+	@python -c "import flair;flair.models.SequenceTagger.load('ner-fast')" 1>>$(LOGFILE) 2>&1
+	@python -c "import flair;flair.models.SequenceTagger.load('pos-fast')" 1>>$(LOGFILE) 2>&1
 	@printf "\r${END} flair-fast    \n"
 
 spacy:

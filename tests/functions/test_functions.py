@@ -1,7 +1,7 @@
 
 #-- Imports ---------------------------------------------------------------------
 import pytest
-from woffle.functions.compose import *
+from woffle.functions.id import *
 
 
 #-- Tests -----------------------------------------------------------------------
