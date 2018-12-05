@@ -16,16 +16,16 @@ from woffle.functions.compose import compose
 #NOTE: all functions are endomorphic String -> String so their composition does
 #      not need to be tested and they can be composed in any order
 def letters(x : str) -> str:
-    return functools.partial(re.sub, r"[^a-zA-Z]", "")
+    return re.sub(r"[^a-zA-Z]", "", x)
 
 def spaces(x : str) -> str:
-    return functools.partial(re.sub, r"\s{2,}"," ")
+    return re.sub(r"\s{2,}", " ", x)
 
 def singles(x : str) -> str:
-    return functools.partial(re.sub, r"\s*\b[a-zA-Z].?\b\s*", "")
+    return re.sub(r"\s*\b[a-zA-Z].?\b\s*", "", x)
 
 def domainbias(x : str) -> str:
-    return functools.partial(re.sub, r"\s?\b(product[s].*|good[s].*\s?)\b", "")
+    return re.sub(r"\s?\b(product[s].*|good[s].*\s?)\b", "", x)
 
 def unlines(x : str) -> str:
     return x.replace('\n', '')
