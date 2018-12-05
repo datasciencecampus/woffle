@@ -9,7 +9,7 @@ import scipy.cluster.hierarchy as H
 
 #-- Definitions
 Z = lambda embed: h.linkage(embed, 'ward')
-clusters = lambda depth: H.fcluster(Z, depth, criterion='distance')
+fetch = lambda depth: H.fcluster(Z, depth, criterion='distance')
 # or: clusters = H.fcluster(Z, 1,  depth='1') -- not sure which is correct right now
 
 
