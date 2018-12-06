@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>w o f f l e</title>
+
+        <link rel="stylesheet" href="http://karetsu.github.io/woffle/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://karetsu.github.io/woffle/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://karetsu.github.io/woffle/css/highlight.dark.css">
+        <link rel="stylesheet" href="http://karetsu.github.io/woffle/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://karetsu.github.io/woffle/">
+                w o f f l e
+                <small class="hidden-xs hidden-sm">
+                    a meta-API for NLP jobs
+                </small>
+            </a>
+
+                            <a href="https://github.com/karetsu/woffle">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+                </a>
+            
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                        <ul class="nav nav-pills nav-stacked">
+                                                            <li class="active">
+                                    <a href="http://karetsu.github.io/woffle/doc/faq.html">
+                                        FAQ
+                                    </a>
+                                </li>
+                                                            <li class="">
+                                    <a href="http://karetsu.github.io/woffle/doc/docs.html">
+                                        Documentation
+                                    </a>
+                                </li>
+                                                    </ul>
+
+                    </nav>
+
+                
+                <section id="content" class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1 id="woffle">woffle</h1>
+<p><img src="https://travis-ci.com/karetsu/woffle.svg?branch=develop" alt="" /></p>
+<p>Please note that this is an active project so some of the instructions are
+incomplete and may not yet work. If you find one and there is not an issue
+already raised for it then please do so. PRs welcome.</p>
+<h2 id="introduction">Introduction</h2>
+<p>As a follow on from <a href="https://github.com/datasciencecampus/optimus">optimus</a> this will allow extension of the work to include
+arbitrary user defined means of processing their text. The initial aim of this
+is to turn optimus from the sprawling tangle of classes that it is into a pure
+as possible functional program.</p>
+<p>Eventually it will be a way to tie together all your NLP tasks and give you the
+option to use whatever back end you like but through a common interface.</p>
+<h2 id="installation">Installation</h2>
+<p>This program is intended for use on modern linux and macOS operating systems. If
+you wish to install it then perform the following actions to get a working
+environment including an installation of fasttext, flair and spacy.</p>
+<pre><code class="language-sh">git clone https://github.com/karetsu/woffle
+cd woffle
+make</code></pre>
+<p>If you also wish to download the <code>wiki.en.zip</code> vectors for fasttext then also do</p>
+<pre><code class="language-sh">make ftmodel</code></pre>
+<p>and if you do not have a CUDA enabled GPU then you may wish to use the flair
+models which are optimised for running on CPUs instead</p>
+<pre><code class="language-sh">make flair-fast</code></pre>
+<h2 id="usage">Usage</h2>
+<p>The intention of this repo is to provide a working example from which to base
+your own processing. The minimum example in order to clean text using spacy to
+identify nouns and performing simple regex is</p>
+<pre><code class="language-python">
+from woffle                   import data
+from woffle.functions.compose import compose
+from woffle.models            import spacy   as model
+
+fp = 'data/test.txt'
+text = [i.replace('\n','') for i in open(fp, 'r').readlines()]
+
+clean = compose(model.parse, data.parse)
+cleaned = [clean(line) for line in text]
+
+for i, j in zip(text, cleaned):
+    print(f"{i} -&gt; {j}")</code></pre>
+<p>For a more complex example which also incorporates text embedding, clustering
+and relabelling clusters see <code>main.py</code>.</p>
+<p>If you wish to build your own back end then please see the instructions on the <a href="https://karetsu.github.io/woffle">website</a>.</p>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container-fluid">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>
