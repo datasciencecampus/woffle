@@ -6,13 +6,23 @@ parse :: String -> String, everything else should just be part of it
 """
 
 #-- Imports ---------------------------------------------------------------------
+# base
+import functools
+
+from typing import List, NewType
+
+
 # third party
 import spacy
 import toml
 
+
 # project
 from woffle.functions.compose import compose
 
+
+#-- Type synonyms ---------------------------------------------------------------
+Doc = NewType('Doc', spacy.tokens.doc.Doc)
 
 
 #-- Definitions -----------------------------------------------------------------
@@ -21,14 +31,24 @@ config = toml.load('config.ini')
 proc = spacy.load(config['spacy']['model'])
 
 
-roots = lambda tokens: [i for i in filter (lambda x: x.dep_ == "ROOT", tokens)]
+def roots(token : Doc) -> List[str]:
+    return [i for i in filter (lambda x: x.dep_ == 'ROOT', tokens)]
+
 #+TODO: first is here for when you don't want to/cannot do NER, currently there
 #       no NER so it is the default target selector
-first = lambda list: list[0]
-lemma = lambda x: x.lemma_
+def fst(xs : List[str]) -> str:
+    return xs[0]
 
-process = lambda x: proc(x)
-vocab = lambda x: x if x in proc.vocab else None
+def lemma(x : Doc) -> str:
+    return x.lemma_
+
+def process(x : str) -> Doc:
+    return proc(x)
+
+def vocab(m : Doc, x : str) -> str:
+    return x if x in m.vocab else ''
+vocab = functools.partial(proc, vocab)
+
 
 # rewrite me
 parse = compose(vocab, lemma, first, roots, process)
