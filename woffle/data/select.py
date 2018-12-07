@@ -1,31 +1,29 @@
 # an idea of how this should work
-import operator
+# +TODO: write these two, they are super simple
+# from woffle.functions.lists import head, tail
+head = lambda l: l[0]
+tail = lambda l: l[1:]
+
 
 # given conditions on the cluster and a function to run in each condition then
 # do the following in a more abstract way
 conditions = [lambda x: 0, lambda x: 0, lambda x: 0, lambda x: 0]
 functions = [lambda x: x, lambda x: x, lambda x: x, lambda x: x]
 
-decide = [(i, j) for i, j in zip(conditions, functions)]
+zipped = zip(conditions, functions)
+
+
+def decide(fs, x):
+    return [i(x) and j(x) for i, j in fs]
 
 
 def select(cluster):
-    pass
+    return head(cluster) or select(tail(cluster))
 
 
-# the actual return is going to be some horrific combination of operator.or_
-# and operator.and_ but will mimic the functionality like:
+# this code will not work, but the plan here then is that we can just use a
+# combination of decide and select to combine the functions on the values
+# in the way we want - its the most obvious way to get what we want
 #
-# return (
-#    ((conditions[0] and functions[0])(cluster))
-#    or ((conditions[1] and functions[1])(cluster))
-#    or ((conditions[2] and functions[2])(cluster))
-#    or ((conditions[3] and functions[3](cluster)))
-#    or (''))
-#
-# we really need to return a functools.reduce with an or over the list of
-# (condition[i] and functions[i])(cluster)
-#
-# this is basically a left fold of the functions of the cluster combined with
-# an and - it feels like applicative should be useful here but this is python
-# country...
+# decide is also horrific in terms of computation, we will turn this into a
+# generator function so as to only process the decision as far as is needed

@@ -10,7 +10,7 @@ from woffle.functions.compose import compose
 from woffle.models import spacy as model
 
 
-# -- Definitions -----------------------------------------------------------------
+# -- Definitions ----------------------------------------------------------------
 def main():
     """
     This function is where you build your own pipeline from the parts that are
@@ -31,6 +31,6 @@ def main():
         print(f"{o:>30s}: {t}")
 
 
-# -- Boilerplate -----------------------------------------------------------------
+# -- Boilerplate ----------------------------------------------------------------
 if __name__ == "__main__":
     main()
