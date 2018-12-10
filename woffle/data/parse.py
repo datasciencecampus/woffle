@@ -51,4 +51,3 @@ parse = compose( domainbias
                , unlines
                , str.strip
                )
-

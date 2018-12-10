@@ -1,0 +1,15 @@
+# named files
+.DS_Store
+
+
+# named directories
+.idea
+__pycache__
+
+
+# wildcards
+*.log
+models/*.bin
+models/*.vec
+data/*
+.mypy*
