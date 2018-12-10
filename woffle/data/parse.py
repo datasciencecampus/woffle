@@ -34,7 +34,6 @@ def regexes(r : dict, x : str) -> str:
 
 replacements = functools.partial(regexes, replace)
 encoding     = functools.partial(regexes, encode)
-stopwords    = functools.partial(regexes, stop)
 
 
 def domainbias(x : str) -> str:
@@ -46,7 +45,9 @@ def unlines(x : str) -> str:
 
 # Composition -----------------------------------------------------------------
 parse = compose( domainbias
+               , encoding
                , replacements
+               , stopwords
                , unlines
                , str.strip
                )

@@ -1,7 +1,3 @@
----
-currentMenu: home
----
-
 # woffle
 
 ![](https://travis-ci.com/karetsu/woffle.svg?branch=develop)
