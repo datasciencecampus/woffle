@@ -2,16 +2,16 @@
 clustering
 """
 
-#-- Imports ---------------------------------------------------------------------
+# -- Imports ---------------------------------------------------------------------
 # third party
 import scipy.cluster.hierarchy as H
 
+from woffle.functions.id import id
 
-#-- Definitions
-Z = lambda embed: h.linkage(embed, 'ward')
-fetch = lambda depth: H.fcluster(Z, depth, criterion='distance')
+# -- Definitions
+Z = lambda embed: h.linkage(embed, "ward")
+fetch = lambda depth: H.fcluster(Z, depth, criterion="distance")
 # or: clusters = H.fcluster(Z, 1,  depth='1') -- not sure which is correct right now
-
 
 
 """
@@ -26,3 +26,6 @@ _,counts = np.unique(c, return_counts=True)
 # words is a numpy array of the processed strings
 targets = [words[np.where(clusters == i)] for i in np.unique(clusters)]
 """
+
+
+cluster = lambda xs: id(xs)
