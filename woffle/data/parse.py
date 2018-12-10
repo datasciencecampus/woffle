@@ -33,16 +33,12 @@ replacements = functools.partial(regexes, replace)
 encoding     = functools.partial(regexes, encode)
 
 
-def domainbias(x : str) -> str:
-    return re.sub(r"\s?\b(product[s].*|good[s].*\s?)\b", "", x)
-
 def unlines(x : str) -> str:
     return x.replace('\n', '')
 
 
 # Composition -----------------------------------------------------------------
-parse = compose( domainbias
-               , encoding
+parse = compose( encoding
                , replacements
                , unlines
                , str.strip

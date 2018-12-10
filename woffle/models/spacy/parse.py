@@ -31,7 +31,7 @@ config = toml.load('config.ini')
 proc = spacy.load(config['spacy']['model'])
 
 
-def roots(token : Doc) -> List[str]:
+def roots(tokens : Doc) -> List[str]:
     return [i for i in filter (lambda x: x.dep_ == 'ROOT', tokens)]
 
 #+TODO: first is here for when you don't want to/cannot do NER, currently there
@@ -45,10 +45,13 @@ def lemma(x : Doc) -> str:
 def process(x : str) -> Doc:
     return proc(x)
 
-def vocab(m : Doc, x : str) -> str:
+#+TODO: fix this - sadly you can't create a type synonym until after you load a
+# language model so it just breaks the tidiness of the code but that's pretty
+# minimal in the grand scheme of things
+def vocab(m : spacy.lang.en.English, x : str) -> str:
     return x if x in m.vocab else ''
-vocab = functools.partial(proc, vocab)
+vocab = functools.partial(vocab, proc)
 
 
 # rewrite me
-parse = compose(vocab, lemma, first, roots, process)
+parse = compose(vocab, lemma, fst, roots, process)

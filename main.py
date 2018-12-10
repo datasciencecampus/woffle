@@ -20,7 +20,7 @@ def main():
 
     # load your data
     fp = "data/test.txt"
-    text = [i.replace("\n", "") for i in open(fp, "r").readlines()]
+    text = [i for i in open(fp, "r").read().splitlines()]
 
     # compose your cleaning functions
     clean = compose(model.parse, data.parse)
