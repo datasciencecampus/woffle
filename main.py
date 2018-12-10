@@ -2,15 +2,15 @@
 classification of free text descriptions
 """
 
-#-- Imports ---------------------------------------------------------------------
+# -- Imports ---------------------------------------------------------------------
 
 # Project
-from woffle                   import data
+from woffle import data
 from woffle.functions.compose import compose
-from woffle.models            import spacy   as model
+from woffle.models import spacy as model
 
 
-#-- Definitions -----------------------------------------------------------------
+# -- Definitions ----------------------------------------------------------------
 def main():
     """
     This function is where you build your own pipeline from the parts that are
@@ -19,8 +19,8 @@ def main():
     """
 
     # load your data
-    fp = 'data/test.txt'
-    text = [i.replace('\n','') for i in open(fp, 'r').readlines()]
+    fp = "data/test.txt"
+    text = [i.replace("\n", "") for i in open(fp, "r").readlines()]
 
     # compose your cleaning functions
     clean = compose(model.parse, data.parse)
@@ -31,6 +31,6 @@ def main():
         print(f"{o:>30s}: {t}")
 
 
-#-- Boilerplate -----------------------------------------------------------------
-if __name__ == '__main__':
+# -- Boilerplate ----------------------------------------------------------------
+if __name__ == "__main__":
     main()
