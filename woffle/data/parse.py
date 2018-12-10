@@ -23,9 +23,6 @@ from woffle.functions.compose import compose
 with open('etc/regex') as f:
     replace = toml.load(f)
 
-with open('etc/stopwords') as f:
-    stop = toml.load(f)
-
 with open('etc/encoding') as f:
     encode = toml.load(f)
 
@@ -47,7 +44,6 @@ def unlines(x : str) -> str:
 parse = compose( domainbias
                , encoding
                , replacements
-               , stopwords
                , unlines
                , str.strip
                )
