@@ -5,7 +5,7 @@
 # named directories
 .idea
 __pycache__
-
+.pyre
 
 # wildcards
 *.log

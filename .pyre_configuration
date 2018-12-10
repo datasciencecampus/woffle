@@ -1,0 +1,10 @@
+{
+  "binary": "/home/karetsu/.pyenv/versions/3.7.1/bin/pyre.bin",
+  "source_directories": [
+    "."
+  ],
+  "search_path": [
+    "."
+  ],
+  "typeshed": "/home/karetsu/.pyenv/versions/3.7.1/lib/pyre_check/typeshed/"
+}
