@@ -7,8 +7,8 @@ parse :: String -> String, everything else should just be part of it
 
 #-- Imports ---------------------------------------------------------------------
 # project
-from woffle.functions.compose import compose
+from woffle.functions.id import id
 
 
 #-- Definitions -----------------------------------------------------------------
-parse = lambda x: x
+parse = id

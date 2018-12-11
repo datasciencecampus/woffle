@@ -7,7 +7,7 @@ classification of free text descriptions
 # Project
 from woffle import data
 from woffle.functions.compose import compose
-from woffle.models import spacy as model
+from woffle.models import spacy, fasttext
 
 
 # -- Definitions ----------------------------------------------------------------
@@ -23,9 +23,16 @@ def main():
     text = [i for i in open(fp, "r").read().splitlines()]
 
     # compose your cleaning functions
-    clean = compose(model.parse, data.parse)
-    target = [clean(line) for line in text]
-    pairs = [(i, j) for i, j in zip(text, target)]
+    clean = compose(spacy.parse, data.parse)
+    target = (clean(line) for line in text)
+    embed = [fasttext.embed(line) for line in target]
+    clusters = [i for i in data.cluster(embed, text, 1)]
+
+    for cluster in clusters:
+        print(cluster.tolist())
+
+
+    pairs = ((i, j) for i, j in zip(text, target))
 
     for o, t in pairs:
         print(f"{o:>30s}: {t}")

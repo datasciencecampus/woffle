@@ -3,4 +3,4 @@ fasttext interface
 """
 
 #-- Imports ---------------------------------------------------------------------
-import fasttext
+from .embed import embed

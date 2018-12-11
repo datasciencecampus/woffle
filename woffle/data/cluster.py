@@ -2,30 +2,41 @@
 clustering
 """
 
-# -- Imports ---------------------------------------------------------------------
+# -- Imports --------------------------------------------------------------------
+# base
+from typing import List, NewType
+
 # third party
-import scipy.cluster.hierarchy as H
-
-from woffle.functions.id import id
-
-# -- Definitions
-Z = lambda embed: h.linkage(embed, "ward")
-fetch = lambda depth: H.fcluster(Z, depth, criterion="distance")
-# or: clusters = H.fcluster(Z, 1,  depth='1') -- not sure which is correct right now
-
-
-"""
-# how to go fetch the clusters for a given depth
-
-
 import numpy as np
-
-# depth 1
-c = clusters(1)
-_,counts = np.unique(c, return_counts=True)
-# words is a numpy array of the processed strings
-targets = [words[np.where(clusters == i)] for i in np.unique(clusters)]
-"""
+import scipy.cluster.hierarchy as clus
 
 
-cluster = lambda xs: id(xs)
+# project
+from woffle.functions.compose import compose
+
+
+# -- Type synonyms --------------------------------------------------------------
+Array = NewType('Array', np.ndarray)
+
+
+# -- Definitions ----------------------------------------------------------------
+
+def z(embedding : Array) -> Array:
+    "Cluster hierarchy array"
+    return clus.linkage(embedding, "ward")
+
+
+# returns the cluster number for each row of the original data
+def fetch(depth: float, links: Array) -> Array:
+    return clus.fcluster(links, depth, criterion="distance")
+#+WARNING: will need a partial somewhere probably, this should be for the depth?
+
+
+def build(xs: List[str], numbers: Array) -> List[Array]:
+    return (np.extract(numbers == i, xs) for i in np.unique(numbers))
+
+
+#+TODO: figure out how this works and make it nicer
+def cluster(embedding: Array, xs: List[str], depth: float) -> List[Array]:
+    return build(xs, fetch(depth, z(embedding)))
+
