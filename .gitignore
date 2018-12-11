@@ -1,6 +1,6 @@
 # named files
 .DS_Store
-
+.pyre_configuration
 
 # named directories
 .idea
