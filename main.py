@@ -24,16 +24,14 @@ def main():
 
     # compose your cleaning functions
     clean = compose(spacy.parse, data.parse)
-    target = (clean(line) for line in text)
+    target = [clean(line) for line in text]
     embed = [fasttext.embed(line) for line in target]
-    clusters = [i for i in data.cluster(embed, text, 1)]
+    clusters = data.cluster(embed, text, 1)
 
     for cluster in clusters:
         print(cluster.tolist())
 
-
     pairs = ((i, j) for i, j in zip(text, target))
-
     for o, t in pairs:
         print(f"{o:>30s}: {t}")
 
