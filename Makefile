@@ -1,4 +1,3 @@
-##
 # woffle
 #
 # @file
@@ -42,6 +41,12 @@ run:
 	@printf "${START} Running woffle"
 	@python main.py
 	@printf "\r${END} run            \n"
+
+check: 
+	@printf "${START} Performing type checks"
+	@pyre init 
+	@pyre --search-path . check
+	@printf "${END} Completed type checks\n"
 
 
 #-- Package installation --------------------------------------------------------
