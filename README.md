@@ -1,6 +1,9 @@
 # woffle
 
-![](https://travis-ci.com/karetsu/woffle.svg?branch=develop)
+[![Project Status: WIP – Initial development is in progress, but there has not
+yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+
 
 Please note that this is an active project so some of the instructions are
 incomplete and may not yet work. If you find one and there is not an issue
