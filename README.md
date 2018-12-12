@@ -54,7 +54,6 @@ your own processing. The minimum example in order to clean text using spacy to
 identify nouns and performing simple regex is
 
 ``` python
-
 from woffle                   import data
 from woffle.functions.compose import compose
 from woffle.models            import spacy   as model
