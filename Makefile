@@ -32,11 +32,6 @@ dist-clean:
 	@rm -rf build/ dist/ *.egg-info
 	@printf "\r${END} dist-clean   \n"
 
-test: clean
-	@printf "${START} Testing\n"
-	@pytest --color=yes $(TEST_PATH)
-	@printf "${END} testing\n"
-
 run:
 	@printf "${START} Running woffle"
 	@python main.py
