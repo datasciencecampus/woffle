@@ -3,6 +3,7 @@ Selection of the label for the cluster based on decision metric
 """
 # -- Imports --------------------------------------------------------------------
 # base
+import functools
 import itertools
 
 from typing import List
@@ -101,7 +102,9 @@ functions = (
 
 
 # exposed default interface
-def select(decisions, functions, cluster):
+def select_(decisions, functions, cluster):
     for d, f in zip(decisions, functions):
         if d(cluster):
             return f(cluster)  # stops the first time that d(cluster) is true
+
+select = functools.partial(map, select_)

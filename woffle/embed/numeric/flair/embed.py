@@ -33,4 +33,7 @@ model = flair.embeddings.WordEmbeddings(config['flair']['model']).precomputed_wo
 # functions
 def embedding(m: Model, x : str) -> List[float]:
     return (x in m.vocab and m.get_vector(x).tolist()) or []
-embed = functools.partial(embedding, model)
+
+
+embed_ = functools.partial(embedding, model)
+embed = functools.partial(map, embed_)

@@ -35,6 +35,8 @@ encoding     = functools.partial(regexes, encode)
 
 # Composition -----------------------------------------------------------------
 parse_ = compose( encoding
-                , replacements
-                , str.strip
-                )
+                 , replacements
+                 , str.strip
+                 )
+
+parse = functools.partial(map, parse_)

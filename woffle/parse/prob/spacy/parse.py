@@ -54,4 +54,5 @@ vocab = functools.partial(vocab, proc)
 
 
 # rewrite me
-parse = compose(vocab, lemma, fst, roots, process)
+parse_ = compose(vocab, lemma, fst, roots, process)
+parse  = functools.partial(map, parse_)

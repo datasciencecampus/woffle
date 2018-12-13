@@ -24,8 +24,9 @@ def main():
 
     # compose your cleaning functions
     clean = compose(spacy.parse, data.parse)
-    target = [clean(line) for line in text]
-    embed = [fasttext.embed(line) for line in target]
+
+    target = clean(text)
+    embed = fasttext.embed(target)
     clusters = data.cluster(embed, text, 1)
 
     for cluster in clusters:

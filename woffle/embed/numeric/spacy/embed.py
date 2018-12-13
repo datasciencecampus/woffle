@@ -39,5 +39,6 @@ model = spacy.load(config["spacy"]["model"])
 def embedding(m: Model, x: str) -> List[float]:
     return m(x).vector.tolist()
 
-  
-embed = functools.partial(embedding, model)
+
+embed_ = functools.partial(embedding, model)
+embed  = functools.partial(map, embed_)
