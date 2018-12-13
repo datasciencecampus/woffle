@@ -33,4 +33,6 @@ model = fastText.load_model(config['fasttext']['model'])
 
 def embedding(m: Model, x : str) -> List[float]:
     return m.get_word_vector(x)
-embed = functools.partial(embedding, model)
+
+embed_ = functools.partial(embedding, model)
+embed  = functools.partial(map, embed_)
