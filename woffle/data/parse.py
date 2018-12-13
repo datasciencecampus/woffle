@@ -33,13 +33,8 @@ replacements = functools.partial(regexes, replace)
 encoding     = functools.partial(regexes, encode)
 
 
-def unlines(x : str) -> str:
-    return x.replace('\n', '')
-
-
 # Composition -----------------------------------------------------------------
-parse = compose( encoding
-               , replacements
-               , unlines
-               , str.strip
-               )
+parse_ = compose( encoding
+                , replacements
+                , str.strip
+                )

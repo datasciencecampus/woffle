@@ -23,12 +23,16 @@ footerText: "Made by karetsu  >>=  Built by Couscous"
 
 menu:
     sections:
+        title:
+            name: Welcome
+            text: index.html
+            relativeUrl: home.html
         main:
             name: Home
             items:
                 home:
                     text: "<i class='fa fa-angle-right'></i> Welcome"
-                    relativeUrl: index.html
+                    relativeUrl: home.html
                 faq:
                     text: "<i class='fa fa-angle-right'></i> FAQ"
                     absoluteUrl: faq.html
