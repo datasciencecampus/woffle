@@ -34,7 +34,7 @@ def main():
     text = [i for i in open(fp, "r").read().splitlines()]
 
     # compose your cleaning functions
-    parse = compose_(dp.parse, data.parse)
+    parse = compose_(dp.parse, pp.parse)
 
     target = parse(text)
     embed = [i for i in ft.embed(target)]  ## TODO: clusters cannot currently take a map
@@ -47,7 +47,7 @@ def main():
     for cluster in clusters:
         print(cluster.tolist())
 
-    target = clean(text)  ## target has been consumed at this point so just resetting it
+    target = parse(text)  ## target has been consumed at this point so just resetting it
                           ## for the purpose of this dummy example
     pairs = ((i, j) for i, j in zip(text, target))
     for o, t in pairs:
