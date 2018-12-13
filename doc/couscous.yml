@@ -1,0 +1,37 @@
+include:
+    - .
+
+
+template:
+    url: https://github.com/karetsu/couscous-waffle
+
+
+baseUrl: https://karetsu.github.io/woffle
+
+github:
+    user: karetsu
+    repo: woffle
+
+title: woffle
+subTitle: An NLP meta-API for dummies, by dummies
+
+
+fontAwesomeIcon: fa fa-comments
+footerText: "Made by karetsu  >>=  Built by Couscous"
+
+
+
+menu:
+    sections:
+        main:
+            name: Home
+            items:
+                home:
+                    text: "<i class='fa fa-angle-right'></i> Welcome"
+                    relativeUrl: index.html
+                faq:
+                    text: "<i class='fa fa-angle-right'></i> FAQ"
+                    absoluteUrl: faq.html
+        advanced:
+            name: Advanced
+            items:

@@ -4,10 +4,13 @@
 Pipfile
 Pipfile.lock
 
+
 # named directories
 .idea
 __pycache__
 .pyre
+.couscous
+
 
 # wildcards
 *.log
