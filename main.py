@@ -38,20 +38,19 @@ def main():
 
     target = parse(text)
     embed = [i for i in ft.embed(target)]  ## TODO: clusters cannot currently take a map
-    clusters = dc.cluster(embed, text, 1)
+    clusters = [i for i in dc.cluster(embed, text, 4)]
 
     ## TODO: I think clusters should be numeric representation of the cluster that the
     ## position in the original text belongs to rather than the list of clusters
     ## themselves as this makes it very hard to reverse to apply the label to the
     ## original input
-    for cluster in clusters:
-        print(cluster.tolist())
 
     target = parse(text)  ## target has been consumed at this point so just resetting it
                           ## for the purpose of this dummy example
     pairs = ((i, j) for i, j in zip(text, target))
     for o, t in pairs:
-        print(f"{o:>30s}: {t}")
+        entrant = [cluster.tolist() for cluster in clusters if o in cluster]
+        print(f"{o:>30s}: {t:15s} -> {entrant[0]}")
 
 
 # -- Boilerplate ----------------------------------------------------------------

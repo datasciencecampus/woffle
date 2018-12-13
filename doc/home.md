@@ -99,18 +99,34 @@ The minimum example in order to clean text using spacy to identify nouns,
 selecting the first noun it encounters and doing a little cleaning is
 
 ```python
-from woffle                   import data
-from woffle.functions.compose import compose
-from woffle.models            import spacy   as model
+# import the required parts of the toolkit
+## parsing libraries: deterministic and probabilistic
+import woffle.parse.deter.parse as dp
+import woffle.parse.prob.spacy as pp
+## embedding libraries: we will use fasttext
+import woffle.embed.numeric.fasttext as ft
+## clustering library: ward linkage
+import woffle.cluster.deter as dc
+## support function: lets us compose other functions
+from woffle.functions.compose import compose_
+# this version of compose runs the operations in the order they appear
 
 fp = 'data/test.txt'
-text = [i.replace('\n','') for i in open(fp, 'r').readlines()]
+text = [i for i in open(fp).read().splitlines()]
 
-clean = compose(model.parse, data.parse)
-cleaned = [clean(line) for line in text]
+# we now want to clean our data using both of the libraries above
+parse = compose_(dp.parse, pp.parse)
 
-for i, j in zip(text, cleaned):
-    print(f"{i} -> {j}")
+target = parse(text)  # note, generator, not yet evaluated
+embed = [i for i in ft.embed(target)] # clusters cannot yet use generators
+clusters = list(dc.cluster(embed, text, 1))
+
+target = parse(text) # generator has been consumed at this point in the above!
+pairs  = ((i,j) for i,j in zip(text, target))
+for o, t in pairs:
+    entrant = [cluster.tolist() for cluster in clusters if o in cluster]
+    print(f"{o:>30s}: {t:15s} -> {entrant[0]}")
+
 ```
 
 For more detailed and complex examples please see
