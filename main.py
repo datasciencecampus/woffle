@@ -5,20 +5,7 @@ classification of free text descriptions
 # -- Imports ---------------------------------------------------------------------
 
 # Project
-## parse
-import woffle.parse.deter.parse as dp
-import woffle.parse.prob.spacy as pp
-
-## embed
-import woffle.embed.numeric.fasttext as ft
-
-## cluster
-import woffle.cluster.deter as dc
-
-
-## support
-from woffle.functions.compose import compose_
-# this version of compose runs the operations in the order they appear in the list
+from woffle.hcluster import parse, embed, cluster
 
 
 # -- Definitions ----------------------------------------------------------------
@@ -30,23 +17,22 @@ def main():
     """
 
     # load your data
-    fp = "data/test.txt"
-    text = [i for i in open(fp, "r").read().splitlines()]
-
-    # compose your cleaning functions
-    parse = compose_(dp.parse, pp.parse)
+    with open('data/test.txt') as handle:
+        text = handle.read().splitlines()
+        # list because I'm using it later, also works as a generator expression
 
     target = parse(text)
-    embed = [i for i in ft.embed(target)]  ## TODO: clusters cannot currently take a map
-    clusters = [i for i in dc.cluster(embed, text, 4)]
+    embed = [i for i in embed(target)]  ## TODO: clusters cannot currently take a map
+    clusters = [i for i in cluster(embed, text, 4)]
 
     ## TODO: I think clusters should be numeric representation of the cluster that the
     ## position in the original text belongs to rather than the list of clusters
     ## themselves as this makes it very hard to reverse to apply the label to the
     ## original input
 
-    target = parse(text)  ## target has been consumed at this point so just resetting it
-                          ## for the purpose of this dummy example
+    target = parse(text)  ## target has been consumed at this point
+                          ## in a real use case I'd make it a list but for this
+                          ## demo I want to make it clear that it isn't a list
     pairs = ((i, j) for i, j in zip(text, target))
     for o, t in pairs:
         entrant = [cluster.tolist() for cluster in clusters if o in cluster]
