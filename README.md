@@ -50,8 +50,20 @@ make flair-fast
 ## Usage
 
 The intention of this repo is to provide a working example from which to base
-your own processing. The minimum example in order to clean text using spacy to
-identify nouns and performing simple regex is
+your own processing. Below is the minimum code required in order to:
+
+- perform regex based cleaning of the text
+- clean text using spacy to identify root nouns
+- select the first noun as the target noun
+- embed the strings using fasttext
+- perform a hierarchical clustering of the vectors
+- perform a cutoff at depth 3 to generate clusters
+- print all of the generated information
+
+This accepts the default actions and structure of the 'hcluster' (hierarchical
+clustering) theme. Should you want to 'roll your own' processing please see the
+manual on the website.
+
 
 ```python
 # import the required parts of the toolkit
