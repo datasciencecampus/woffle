@@ -20,6 +20,7 @@ def main():
     with open('data/test.txt') as handle:
         text = handle.read().splitlines()
         # list because I'm using it later, also works as a generator expression
+        # we also use this instead of .readlines() because it doesn't give \n
 
     target = parse(text)
     embed = [i for i in embed(target)]  ## TODO: clusters cannot currently take a map
