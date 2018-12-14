@@ -53,19 +53,23 @@ The intention of this repo is to provide a working example from which to base
 your own processing. The minimum example in order to clean text using spacy to
 identify nouns and performing simple regex is
 
-``` python
-from woffle                   import data
-from woffle.functions.compose import compose
-from woffle.models            import spacy   as model
+```python
+# import the required parts of the toolkit
+from woffle.hcluster import parse, embed, cluster
 
-fp = 'data/test.txt'
-text = [i.replace('\n','') for i in open(fp, 'r').readlines()]
+with open('data/test.txt') as handle:
+  text = handle.read().splitlines()
 
-clean = compose(model.parse, data.parse)
-cleaned = [clean(line) for line in text]
+target = parse(text)  # note, generator, not yet evaluated
+embed = [i for i in embed(target)] # clusters cannot yet use generators
+clusters = [i for i in cluster(embed, text, 3)]
 
-for i, j in zip(text, cleaned):
-    print(f"{i} -> {j}")
+target = parse(text) # generator has been consumed at this point in the above!
+pairs  = ((i,j) for i,j in zip(text, target))
+for o, t in pairs:
+    entrant = [cluster.tolist() for cluster in clusters if o in cluster]
+    print(f"{o:>30s}: {t:15s} -> {entrant[0]}")
+
 ```
 
 For a more complex example which also incorporates text embedding, clustering
