@@ -15,7 +15,6 @@ import numpy as np
 from textacy.similarity import levenshtein, jaccard, hamming
 
 # project
-from woffle.functions.data import id
 from woffle.functions.lists import foldl1
 
 
@@ -64,7 +63,7 @@ def ngCond(xs: List[str]) -> float:
     return (
         1.0 #TODO: if there is only one item then its vacuously 0?
         if len(xs) == 1
-        else np.mean([jaccard(*ys) for ys in itertools.combinations(xs, 2)]
+        else np.mean([jaccard(*ys) for ys in itertools.combinations(xs, 2)])
     )
 
 
@@ -108,7 +107,7 @@ def fallback(xs: List[str]) -> str:
 decisions = (
     lambda xs: edCond(xs) > 0.75,  # high lexical similarity
     lambda xs: wgCond(xs) > 0.75,  # medium lexical similarity
-    lambda xs: ngCond(xs) > 0.75,  # low lexical similarity
+    lambda xs: ngCond(xs) > 0.1,   # low lexical similarity
     lambda xs: hnCond(xs) > 0.75,  # semantic similarity
     lambda xs: id(xs) == xs,  # default always true fallback
 )
