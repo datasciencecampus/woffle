@@ -11,11 +11,11 @@ from typing import Callable, List, NewType
 
 # third party
 import numpy as np
+import toml
 
 from textacy.similarity import levenshtein, jaccard, hamming
 
 # project
-from woffle.functions.generics import id
 from woffle.functions.lists import foldl1
 
 
@@ -24,6 +24,9 @@ from woffle.functions.lists import foldl1
 Array = NewType('Array', np.ndarray)
 
 # -- Definitions ----------------------------------------------------------------
+with open('config.ini') as file:
+    config = toml.load(file)['select']
+
 
 # -- Supporting functions
 def editMatrix(xs: List[str]) -> Array:
@@ -106,11 +109,11 @@ def fallback(xs: List[str]) -> str:
 # given conditions on the cluster and a function to run in each condition then
 # do the following in a more abstract way
 decisions = (
-    lambda xs: edCond(xs) > 0.75,  # high lexical similarity
-    lambda xs: wgCond(xs) > 0.75,  # medium lexical similarity
-    lambda xs: ngCond(xs) > 0.1,   # low lexical similarity
-    lambda xs: hnCond(xs) > 0.75,  # semantic similarity
-    lambda xs: id(xs) == xs,  # default always true fallback
+    lambda xs: edCond(xs) > config['edit'],  # high lexical similarity
+    lambda xs: wgCond(xs) > config['word'],  # medium lexical similarity
+    lambda xs: ngCond(xs) > config['char'],   # low lexical similarity
+    lambda xs: hnCond(xs) > config['hype'],  # semantic similarity
+    lambda xs: True  # default always true fallback
 )
 
 
@@ -119,7 +122,7 @@ functions = (
     lambda xs: wordgram(xs),  # medium lexical similarity
     lambda xs: chargram(xs),  # low lexical similarity
     lambda xs: hypernyms(xs),  # semantic similarity
-    lambda xs: fallback(xs),  # default fallback
+    lambda xs: fallback(xs)  # default fallback
 )
 
 
