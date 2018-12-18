@@ -6,15 +6,17 @@ Selection of the label for the cluster based on decision metric
 import functools
 import itertools
 
-from typing import List, NewType
+from difflib import SequenceMatcher
+from typing import Callable, List, NewType
 
 # third party
 import numpy as np
 
-from textacy.similarity import levenshtein
+from textacy.similarity import levenshtein, jaccard, hamming
 
 # project
-from woffle.functions.id import id
+from woffle.functions.data import id
+from woffle.functions.lists import foldl1
 
 
 # -- Type synonyms --------------------------------------------------------------
@@ -27,6 +29,10 @@ Array = NewType('Array', np.ndarray)
 def editMatrix(xs: List[str]) -> Array:
     return np.array([[levenshtein(x,y) for y in xs] for x in xs])
 
+
+def getMatch(x: str, y: str) -> str:
+    match = SequenceMatcher(None, x, y).find_longest_match(0, len(x), 0, len(y))
+    return x[match.a : match.a + match.size]
 
 
 # -- Decision functions
@@ -44,13 +50,22 @@ def edCond(xs: List[str]) -> float:
 # wordgram measurement
 def wgCond(xs: List[str]) -> float:
     "average number of common words across the cluster"
-    return 0
+    return (
+        1.0  #TODO: if there is only one thing then we must return no commonality?
+        if len(xs) == 1
+        else np.mean([jaccard(x.split(), y.split())
+                      for x, y in itertools.combinations(xs, 2)])
+    )
 
 
 # charactergram measurement
 def ngCond(xs: List[str]) -> float:
     "longest common ngram"
-    return 0
+    return (
+        1.0 #TODO: if there is only one item then its vacuously 0?
+        if len(xs) == 1
+        else np.mean([jaccard(*ys) for ys in itertools.combinations(xs, 2)]
+    )
 
 
 # +TODO: decide if there is a better than wordnet approach with spacy
@@ -61,19 +76,20 @@ def hnCond(xs: List[str]) -> float:
 
 
 # -- Text replacement functions
-# +TODO: write these functions
-
-
 def edit(xs: List[str]) -> str:
     return xs[np.sum(editMatrix(xs), axis=1).argmax()]
+# selecting the word which has most similarity with all other words
 
 
 def wordgram(xs: List[str]) -> str:
-    return "Yep, I need to implement wordgram selector"
+    return set.intersection(*map(set, xs))
+# TODO: fix this, this is the most extreme placeholder for now, not quite the
+# desired functionality but will select something whilst I write the other
+# conditions
 
 
 def chargram(xs: List[str]) -> str:
-    return "Yep, I need to implement character-gram selector"
+    return foldl1(getMatch, xs)
 
 
 def hypernyms(xs: List[str]) -> str:

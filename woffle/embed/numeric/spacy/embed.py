@@ -19,7 +19,7 @@ import toml
 
 # project
 from woffle.functions.compose import compose
-from woffle.functions.id import id
+from woffle.functions.generics import id
 
 
 # -- Type synonyms ---------------------------------------------------------------
