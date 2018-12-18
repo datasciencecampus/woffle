@@ -37,11 +37,19 @@ run:
 	@python main.py
 	@printf "\r${END} run            \n"
 
-check: 
+check:
 	@printf "${START} Performing type checks"
-	@pyre init 
+	@pyre init
 	@pyre --search-path . check
 	@printf "${END} Completed type checks\n"
+
+test:
+	@printf "${END} Tests pending first rc or an uptake on PRs"
+
+
+#-- Task themes -----------------------------------------------------------------
+clustering: py ft ftmodel spacy
+sentiment: py flair spacy
 
 
 #-- Package installation --------------------------------------------------------
@@ -78,7 +86,7 @@ flair-fast:
 spacy:
 	@printf "${START} Installing: spacy"
 	@pip install spacy 1>>$(LOGFILE)
-	@python -m spacy download en_core_web_sm  1>>$(LOGFILE)
+	@python -m spacy download en_core_web_md  1>>$(LOGFILE)
 	@printf "\r${END} spacy    \n"
 
 # end
