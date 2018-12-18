@@ -6,12 +6,12 @@ Selection of the label for the cluster based on decision metric
 import functools
 import itertools
 
-from typing import List
-
+from typing import List, NewType
 
 # third party
-from textacy.similarity import levenshtein
+import numpy as np
 
+from textacy.similarity import levenshtein
 
 # project
 from woffle.functions.id import id
@@ -19,19 +19,25 @@ from woffle.functions.id import id
 
 # -- Type synonyms --------------------------------------------------------------
 # +TODO: figure out of we need any...
-
+Array = NewType('Array', np.ndarray)
 
 # -- Definitions ----------------------------------------------------------------
 
-# -- Decision functions -- #
+# -- Supporting functions
+def editMatrix(xs: List[str]) -> Array:
+    return np.array([[levenshtein(x,y) for y in xs] for x in xs])
+
+
+
+# -- Decision functions
 
 # maps levenshtein distance into the closed interval [0,1]
 def edCond(xs: List[str]) -> float:
-    "aver1age edit distance on cluster"
+    "average edit distance on cluster"
     return (
-        0
+        1.0  # levenshtein returns 1 if they are identical
         if len(xs) == 1
-        else sum([levenshtein(*ys) for ys in itertools.combinations(xs, 2)]) / len(xs)
+        else np.mean([levenshtein(*ys) for ys in itertools.combinations(xs, 2)])
     )
 
 
@@ -54,12 +60,12 @@ def hnCond(xs: List[str]) -> float:
     return 0
 
 
-# -- Text replacement functions -- #
+# -- Text replacement functions
 # +TODO: write these functions
 
 
 def edit(xs: List[str]) -> str:
-    return "Yep, I need to implement edit distance selector"
+    return xs[np.sum(editMatrix(xs), axis=1).argmax()]
 
 
 def wordgram(xs: List[str]) -> str:
@@ -102,9 +108,10 @@ functions = (
 
 
 # exposed default interface
-def select_(decisions, functions, cluster):
+def select__(decisions, functions, cluster):
     for d, f in zip(decisions, functions):
         if d(cluster):
             return f(cluster)  # stops the first time that d(cluster) is true
 
+select_ = functools.partial(select__, decisions, functions)
 select = functools.partial(map, select_)

@@ -11,5 +11,7 @@ from woffle.cluster.deter import cluster
 
 from woffle.functions.compose import compose, compose_
 
+from woffle.select.lexical import select, select_
+
 parse  = compose(pp.parse,  dp.parse)
 parse_ = compose(pp.parse_, dp.parse_)
