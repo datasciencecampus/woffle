@@ -15,6 +15,7 @@ import numpy as np
 from textacy.similarity import levenshtein, jaccard, hamming
 
 # project
+from woffle.functions.generics import id
 from woffle.functions.lists import foldl1
 
 
