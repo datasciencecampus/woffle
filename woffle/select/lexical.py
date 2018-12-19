@@ -21,7 +21,7 @@ from woffle.functions.lists import foldl1
 
 # -- Type synonyms --------------------------------------------------------------
 # +TODO: figure out of we need any...
-Array = NewType('Array', np.ndarray)
+Array = NewType('Array', np.array)
 
 # -- Definitions ----------------------------------------------------------------
 with open('config.ini') as file:
@@ -85,7 +85,10 @@ def edit(xs: List[str]) -> str:
 
 
 def wordgram(xs: List[str]) -> str:
-    return set.intersection(*map(set, xs))
+    return (
+        " ".join(
+        word for word in set.intersection(*map(set, (x.split() for x in xs))))
+    )
 # TODO: fix this, this is the most extreme placeholder for now, not quite the
 # desired functionality but will select something whilst I write the other
 # conditions
