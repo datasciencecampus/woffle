@@ -35,10 +35,7 @@ def main():
     target = parse(text)  ## target has been consumed at this point
                           ## in a real use case I'd make it a list but for this
                           ## demo I want to make it clear that it isn't a list
-    for o, t in zip(text, target):
-        print(f"{o:>30s}: {t:>15s}")
 
-    print("\n\n\n")
     for c, l in zip(clusters, labels):
         print(f"{l:>30s}: {c}")
 

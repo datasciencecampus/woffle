@@ -118,7 +118,7 @@ def edit(xs: List[str]) -> str:
 
 def wordgram(xs: List[str]) -> str:
     common = (wg_group(x) for x in xs)
-    return "".join(set.intersection(*common))
+    return "".join(set.intersection(*common)).strip()
 # TODO: fix this more: this currently gives the entire intersection even if  the
 # words are not consecutive, this is not the correct behaviour
 
