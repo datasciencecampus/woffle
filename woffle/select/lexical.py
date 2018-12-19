@@ -28,7 +28,6 @@ Array = NewType('Array', np.array)
 with open('config.ini') as file:
     config = toml.load(file)['select']
 
-
 # -------------------------------------------------------------------------------
 #  ____                                     _    _
 # / ___|  _   _  _ __   _ __    ___   _ __ | |_ (_) _ __    __ _
@@ -119,8 +118,6 @@ def edit(xs: List[str]) -> str:
 def wordgram(xs: List[str]) -> str:
     common = (wg_group(x) for x in xs)
     return "".join(set.intersection(*common)).strip()
-# TODO: fix this more: this currently gives the entire intersection even if  the
-# words are not consecutive, this is not the correct behaviour
 
 
 def chargram(xs: List[str]) -> str:
