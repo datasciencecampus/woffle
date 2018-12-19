@@ -7,7 +7,7 @@ import functools
 import itertools
 
 from difflib import SequenceMatcher
-from typing import Callable, List, NewType
+from typing import Callable, List, NewType, Set
 
 # third party
 import numpy as np
@@ -16,19 +16,28 @@ import toml
 from textacy.similarity import levenshtein, jaccard, hamming
 
 # project
-from woffle.functions.lists import foldl1
+from woffle.functions.lists import foldl, foldl1
 
 
 # -- Type synonyms --------------------------------------------------------------
 # +TODO: figure out of we need any...
 Array = NewType('Array', np.array)
 
+
 # -- Definitions ----------------------------------------------------------------
 with open('config.ini') as file:
     config = toml.load(file)['select']
 
 
-# -- Supporting functions
+# -------------------------------------------------------------------------------
+#  ____                                     _    _
+# / ___|  _   _  _ __   _ __    ___   _ __ | |_ (_) _ __    __ _
+# \___ \ | | | || '_ \ | '_ \  / _ \ | '__|| __|| || '_ \  / _` |
+#  ___) || |_| || |_) || |_) || (_) || |   | |_ | || | | || (_| |
+# |____/  \__,_|| .__/ | .__/  \___/ |_|    \__||_||_| |_| \__, |
+#               |_|    |_|                                 |___/
+#
+# -------------------------------------------------------------------------------
 def editMatrix(xs: List[str]) -> Array:
     return np.array([[levenshtein(x,y) for y in xs] for x in xs])
 
@@ -38,8 +47,24 @@ def getMatch(x: str, y: str) -> str:
     return x[match.a : match.a + match.size]
 
 
-# -- Decision functions
+def wg_fetch(x: str, n: int) -> Set[str]:
+    tokens = x.split()
+    ngrams = (" ".join(tokens[i:i+n]) for i in range(len(tokens) - n + 1))
+    return set(ngrams)
 
+
+def wg_group(x:str) -> Set[str]:
+    return set.union(*(wg_fetch(x, i) for i in range(1, len(x.split())+1)))
+
+
+# -------------------------------------------------------------------------------
+#                         _  _  _    _
+#   ___  ___   _ __    __| |(_)| |_ (_)  ___   _ __   ___
+#  / __|/ _ \ | '_ \  / _` || || __|| | / _ \ | '_ \ / __|
+# | (__| (_) || | | || (_| || || |_ | || (_) || | | |\__ \
+#  \___|\___/ |_| |_| \__,_||_| \__||_| \___/ |_| |_||___/
+#
+# -------------------------------------------------------------------------------
 # maps levenshtein distance into the closed interval [0,1]
 def edCond(xs: List[str]) -> float:
     "average edit distance on cluster"
@@ -78,20 +103,24 @@ def hnCond(xs: List[str]) -> float:
     return 0
 
 
-# -- Text replacement functions
+# -------------------------------------------------------------------------------
+#             _              _    _
+#  ___   ___ | |  ___   ___ | |_ (_)  ___   _ __
+# / __| / _ \| | / _ \ / __|| __|| | / _ \ | '_ \
+# \__ \|  __/| ||  __/| (__ | |_ | || (_) || | | |
+# |___/ \___||_| \___| \___| \__||_| \___/ |_| |_|
+#
+# -------------------------------------------------------------------------------
 def edit(xs: List[str]) -> str:
     return xs[np.sum(editMatrix(xs), axis=1).argmax()]
 # selecting the word which has most similarity with all other words
 
 
 def wordgram(xs: List[str]) -> str:
-    return (
-        " ".join(
-        word for word in set.intersection(*map(set, (x.split() for x in xs))))
-    )
-# TODO: fix this, this is the most extreme placeholder for now, not quite the
-# desired functionality but will select something whilst I write the other
-# conditions
+    common = (wg_group(x) for x in xs)
+    return "".join(set.intersection(*common))
+# TODO: fix this more: this currently gives the entire intersection even if  the
+# words are not consecutive, this is not the correct behaviour
 
 
 def chargram(xs: List[str]) -> str:
@@ -106,9 +135,15 @@ def fallback(xs: List[str]) -> str:
     return "Yep, I need to implement the fallback selector"
 
 
-# -- Exports --------------------------------------------------------------------
-# +TODO: replace all these 0.75s with proper thresholds
-
+# -------------------------------------------------------------------------------
+#                                                    _
+#   __ _  _ __  __ _  _   _  _ __ ___    ___  _ __  | |_  ___
+#  / _` || '__|/ _` || | | || '_ ` _ \  / _ \| '_ \ | __|/ __|
+# | (_| || |  | (_| || |_| || | | | | ||  __/| | | || |_ \__ \
+#  \__,_||_|   \__, | \__,_||_| |_| |_| \___||_| |_| \__||___/
+#              |___/
+#
+# -------------------------------------------------------------------------------
 # given conditions on the cluster and a function to run in each condition then
 # do the following in a more abstract way
 decisions = (
@@ -129,11 +164,19 @@ functions = (
 )
 
 
-# exposed default interface
-def select__(decisions, functions, cluster):
+# -------------------------------------------------------------------------------
+#  _         _                __
+# (_) _ __  | |_  ___  _ __  / _|  __ _   ___  ___
+# | || '_ \ | __|/ _ \| '__|| |_  / _` | / __|/ _ \
+# | || | | || |_|  __/| |   |  _|| (_| || (__|  __/
+# |_||_| |_| \__|\___||_|   |_|   \__,_| \___|\___|
+#
+# -------------------------------------------------------------------------------
+# exposed default interfaces
+def represent(decisions, functions, cluster):
     for d, f in zip(decisions, functions):
         if d(cluster):
             return f(cluster)  # stops the first time that d(cluster) is true
 
-select_ = functools.partial(select__, decisions, functions)
+select_ = functools.partial(represent, decisions, functions)
 select = functools.partial(map, select_)
