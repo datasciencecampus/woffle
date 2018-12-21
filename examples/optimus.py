@@ -28,19 +28,30 @@ def main():
     labels = {}
 
     while numclusters > 1:
+        print(f"** Depth {depth}")
+        print("    -- embedding")
         embedding = list(embed(target))  ## TODO: clusters cannot currently take a map
+
+        print(f"    -- clustering")
         clusters = cluster(embedding, target, depth)
 
-        if len(clusters) == numclusters:
+        if len(set(clusters)) == numclusters:
+            print("    >> No new clusters generated")
+            labels[f"tier_{depth}"] = labels[f"tier_{depth-1}"]
             depth += 1
         else:
-            print(f"Processing: depth {depth}, clusters {len(clusters)}")
-            numclusters = len(clusters)
-            labels[depth] = select(target, clusters)
+            numclusters = len(set(clusters))
 
-            target = labels[depth]
+            print("    -- generating labels")
+            labels[f"tier_{depth}"] = list(select(target, clusters))
 
-    return labels
+            target = [ labels[f"tier_{depth}"][i]
+                      if labels[f"tier_{depth}"][i]
+                      else text[i]
+                      for i in range(len(text))
+                     ]
+            depth += 1
+
 
 # -- Boilerplate ----------------------------------------------------------------
 if __name__ == "__main__":
