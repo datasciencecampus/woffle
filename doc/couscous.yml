@@ -32,6 +32,21 @@ menu:
                 faq:
                     text: "<i class='fa fa-angle-right'></i> FAQ"
                     absoluteUrl: faq.html
-        advanced:
-            name: Advanced
+        themes:
+            name: Themes
             items:
+                themedesc:
+                    text: "<i class='fa fa-angle-right'></i> Overview"
+                    absoluteUrl: themes.html
+                hcluster:
+                    text: "<i class='fa fa-angle-right'></i> Hierarchical Clustering"
+                    absoluteUrl: hcluster.html
+                sentiment:
+                    text: "<i class='fa fa-angle-right'></i> Sentiment Analysis"
+                    absoluteUrl: sentiment.html
+        advanced:
+            name: Advanced Use
+            items:
+                overadvance:
+                    text: "<i class='fa fa-angle-right'></i> Overview"
+                    absoluteUrl: advanced.html
