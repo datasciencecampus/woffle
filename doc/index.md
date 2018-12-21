@@ -97,7 +97,7 @@ git clone https://github.com/karetsu/woffle myProjectName
 so that it provides a working directory for specific projects. Included is an
 example of how you would use the tool to do some simple parsing of an example
 dataset and return the cleaned target phrase for the sentence using a
-combination of deterministic (i.e. regex replacements )and probabilistic parsing
+combination of deterministic (i.e. regex replacements) and probabilistic parsing
 (using spaCy) to achieve this goal.
 
 
