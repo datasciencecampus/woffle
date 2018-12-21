@@ -37,6 +37,10 @@ with open('config.ini') as file:
 #               |_|    |_|                                 |___/
 #
 # -------------------------------------------------------------------------------
+def build(xs: List[str], clusters: List[int]) -> List[Array]:
+    return (np.extract(clusters == i, xs) for i in np.unique(clusters))
+
+
 def editMatrix(xs: List[str]) -> Array:
     return np.array([[levenshtein(x,y) for y in xs] for x in xs])
 
@@ -68,8 +72,8 @@ def wg_group(x:str) -> Set[str]:
 def edCond(xs: List[str]) -> float:
     "average edit distance on cluster"
     return (
-        1.0  # levenshtein returns 1 if they are identical
-        if len(xs) == 1
+        0.0  # levenshtein returns 1 if they are identical
+        if len(xs) <= 1
         else np.mean([levenshtein(*ys) for ys in itertools.combinations(xs, 2)])
     )
 
@@ -78,8 +82,8 @@ def edCond(xs: List[str]) -> float:
 def wgCond(xs: List[str]) -> float:
     "average number of common words across the cluster"
     return (
-        1.0  #TODO: if there is only one thing then we must return no commonality?
-        if len(xs) == 1
+        0.0  #TODO: if there is only one thing then we must return no commonality?
+        if len(xs) <= 1
         else np.mean([jaccard(x.split(), y.split())
                       for x, y in itertools.combinations(xs, 2)])
     )
@@ -89,17 +93,23 @@ def wgCond(xs: List[str]) -> float:
 def ngCond(xs: List[str]) -> float:
     "longest common ngram"
     return (
-        1.0 #TODO: if there is only one item then its vacuously 0?
-        if len(xs) == 1
+        0.0 #TODO: if there is only one item then its vacuously 0?
+        if len(xs) <= 1
         else np.mean([jaccard(*ys) for ys in itertools.combinations(xs, 2)])
     )
 
 
-# +TODO: decide if there is a better than wordnet approach with spacy
+# TODO: decide if there is a better than wordnet approach with spacy
 # semantic similarity
 def hnCond(xs: List[str]) -> float:
     "implement hypernym lookup"
-    return 0
+    return (
+        0.0
+        if len(xs) <= 1
+        else 1.0
+    )
+# TODO: currently always run it, should perhaps check to see if there are enough
+# word in vocabulary in order to try to look them up?
 
 
 # -------------------------------------------------------------------------------
@@ -129,7 +139,7 @@ def hypernyms(xs: List[str]) -> str:
 
 
 def fallback(xs: List[str]) -> str:
-    return "Yep, I need to implement the fallback selector"
+    return ""
 
 
 # -------------------------------------------------------------------------------
@@ -172,8 +182,12 @@ functions = (
 # exposed default interfaces
 def represent(decisions, functions, cluster):
     for d, f in zip(decisions, functions):
+        print(cluster)
         if d(cluster):
             return f(cluster)  # stops the first time that d(cluster) is true
 
+
 select_ = functools.partial(represent, decisions, functions)
-select = functools.partial(map, select_)
+
+def select(xs: [str], clusters: [int]) -> [str]:
+    return map(select_, build(xs, clusters))

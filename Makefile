@@ -33,9 +33,9 @@ dist-clean:
 	@printf "\r${END} dist-clean   \n"
 
 run:
-	@printf "${START} Running woffle"
+	@printf "${START} Running woffle\n"
 	@python main.py
-	@printf "\r${END} run            \n"
+	@printf "${END} run            \n"
 
 check:
 	@printf "${START} Performing type checks"
