@@ -27,16 +27,17 @@ with open('etc/encoding') as f:
     encode = toml.load(f)
 
 def regexes(r : dict, x : str) -> str:
-    return compose(*[functools.partial(re.sub, i, j) for i,j in r.items()])(x)
+    return compose(*[functools.partial(re.sub, i, j, flags=re.IGNORECASE)
+                for i,j in r.items()])(x)
 
 replacements = functools.partial(regexes, replace)
 encoding     = functools.partial(regexes, encode)
 
 
 # Composition -----------------------------------------------------------------
-parse_ = compose( encoding
-                 , replacements
-                 , str.strip
-                 )
+parse_ = compose( str.strip
+                , encoding
+                , replacements
+                )
 
 parse = functools.partial(map, parse_)
