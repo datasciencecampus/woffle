@@ -12,9 +12,9 @@ already raised for it then please do so.
 
 ## Introduction
 
-`woffle` is a meta-API which allows you to compose various NLP tasks via a
-common interface using each of the most popular currently available tools. This
-includes
+`woffle` is a project template which aims to allows you to compose various NLP
+tasks via a common interface using each of the most popular currently available
+tools. This includes
 
 - spaCy
 - fastText
@@ -33,21 +33,26 @@ deterministic processing or whether the output is probabilistically generated
 Currently the tasks we aim to perform are
 
 - **parsing**
-  including replacement of a list of regex strings defined in a configuration file
+
+    including replacement of a list of regex strings defined in a configuration file
 - **embedding**
-  not only generating numeric vectors from your text using
-  fasttext, spacy's gloVe implementation and similar but I envision that this
-  should also include tasks such as topic modelling and semantic analysis
-  purely because they are mappings from your text into some kind of
-  representation space
+
+    not only generating numeric vectors from your text using
+    fasttext, spacy's gloVe implementation and similar but I envision that this
+    should also include tasks such as topic modelling and semantic analysis
+    purely because they are mappings from your text into some kind of
+    representation space
 - **clustering**
-  deterministic (e.g. Ward linkage) clustering and proabilitistic clustering
-  will be included
+
+    deterministic (e.g. Ward linkage) clustering, density based clustering and
+    some probabilistic clustering techniques are included - please see the
+    themes section for your task to find out which is the default in your theme
 - **selection**
-  the ability to replace the content of a cluster
-  with a representative 'label', in optimus this is based on functions of the
-  cluster based on decisions on the content of the cluster but this could be as
-  simple as replacing the the cluster with its sentiment score
+
+    the ability to replace the content of a cluster
+    with a representative 'label', in optimus this is based on functions of the
+    cluster based on decisions on the content of the cluster but this could be as
+    simple as replacing the the cluster with its sentiment score
 
 
 These functions will be called the same thing regardless of which back end you

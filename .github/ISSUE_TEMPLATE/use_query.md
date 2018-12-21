@@ -1,26 +1,16 @@
 ---
-name: Bug report
-about: Create a report to help us improve
-title: "[ISSUE]"
-labels: issue
-assignees: ''
+name: Use query
+about: Ask a question about using woffle
+title: "[QUERY]"
+labels: query
+assignees: 'karetsu'
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
-
-**Expected behavior**
+**Describe what you are trying to do**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
+**Which parts of the manual are unclear?**
 If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
