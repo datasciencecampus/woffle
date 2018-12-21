@@ -10,13 +10,12 @@ from typing import List, NewType
 import numpy as np
 import scipy.cluster.hierarchy as clus
 
-
 # project
 from woffle.functions.compose import compose
 
 
 # -- Type synonyms --------------------------------------------------------------
-Array = NewType('Array', np.ndarray)
+Array = NewType('Array', np.array)
 
 
 # -- Definitions ----------------------------------------------------------------
@@ -29,14 +28,8 @@ def z(embedding : Array) -> Array:
 # returns the cluster number for each row of the original data
 def fetch(depth: float, links: Array) -> Array:
     return clus.fcluster(links, depth, criterion="distance")
-#+WARNING: will need a partial somewhere probably, this should be for the depth?
-
-
-def build(xs: List[str], numbers: Array) -> List[Array]:
-    return (np.extract(numbers == i, xs) for i in np.unique(numbers))
 
 
 #+TODO: figure out how this works and make it nicer
-def cluster(embedding: Array, xs: List[str], depth: float) -> List[Array]:
-    return build(xs, fetch(depth, z(embedding)))
-
+def cluster(embedding: Array, xs: [str], depth: float) -> List[Array]:
+    return fetch(depth, z(embedding))
