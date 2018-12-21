@@ -1,5 +1,5 @@
 """
-classification of free text descriptions
+woffle implementation of https://github.com/datasciencecampus/optimus
 """
 
 # -- Imports ---------------------------------------------------------------------
@@ -23,20 +23,24 @@ def main():
         # we also use this instead of .readlines() because it doesn't give \n
 
     target = list(parse(text))
-    embedding = list(embed(target))  ## TODO: clusters cannot currently take a map
-    clusters = cluster(embedding, target, 1)
-    labels = select(target, clusters)
+    numclusters = len(target)
+    depth = 1
+    labels = {}
 
-    ## TODO: I think clusters should be numeric representation of the cluster that the
-    ## position in the original text belongs to rather than the list of clusters
-    ## themselves as this makes it very hard to reverse to apply the label to the
-    ## original input
+    while numclusters > 1:
+        embedding = list(embed(target))  ## TODO: clusters cannot currently take a map
+        clusters = cluster(embedding, target, depth)
 
-    print(*zip(text, target, clusters, labels))
+        if len(clusters) == numclusters:
+            depth += 1
+        else:
+            print(f"Processing: depth {depth}, clusters {len(clusters)}")
+            numclusters = len(clusters)
+            labels[depth] = select(target, clusters)
 
-    for t, l in zip(text, labels):
-        print(f"{t:>30s}: {l}")
+            target = labels[depth]
 
+    return labels
 
 # -- Boilerplate ----------------------------------------------------------------
 if __name__ == "__main__":
