@@ -14,6 +14,11 @@ GREEN=\e[35m
 NONE=\e[0m
 BOLD=\e[1m
 
+
+ifeq ($(shell uname -s),Darwin)
+		$(export MACOSX_DEPLOYMENT_TARGET=10.9)
+endif
+
 START=${RED}ᐅ${NONE}
 END=⌁ \${BOLD}${GREEN}COMPLETE:${NONE}
 
@@ -33,7 +38,7 @@ dist-clean:
 	@printf "\r${END} dist-clean   \n"
 
 run:
-	@printf "${START} Running woffle\n"
+	@printf "${START} woffling\n"
 	@python main.py
 	@printf "${END} run            \n"
 
@@ -55,7 +60,7 @@ sentiment: py flair spacy
 #-- Package installation --------------------------------------------------------
 py:
 	@printf "${START} Installing: python environment"
-	@pip install -r requirements.txt 1>>$(LOGFILE)
+	@pip install --upgrade -r requirements.txt 1>>$(LOGFILE)
 	@printf "\r${END} python environment    \n"
 
 ft:
