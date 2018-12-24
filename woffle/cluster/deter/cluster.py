@@ -11,7 +11,7 @@ import numpy as np
 import scipy.cluster.hierarchy as clus
 
 # project
-from woffle.functions.compose import compose
+from woffle.functions.generics import compose
 
 
 # -- Type synonyms --------------------------------------------------------------

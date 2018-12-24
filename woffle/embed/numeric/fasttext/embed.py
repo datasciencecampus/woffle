@@ -16,7 +16,7 @@ import fastText
 import toml
 
 # project
-from woffle.functions.compose import compose
+from woffle.functions.generics import compose
 from woffle.functions.generics import id
 
 
