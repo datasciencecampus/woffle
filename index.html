@@ -1,41 +1,255 @@
-<!doctype html>
-<html class="no-js" lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Ev'ry day I'm woffling</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <script src="js/isotope.js"></script>
+        <title>woffle</title>
 
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <!-- Place favicon.ico in the root directory -->
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet">
+        <link rel="stylesheet" href="https://karetsu.github.io/woffle/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://karetsu.github.io/woffle/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://karetsu.github.io/woffle/css/dracula.css">
+        <link rel="stylesheet" href="https://karetsu.github.io/woffle/css/main.css">
+    </head>
+    <body>
 
-  </head>
-  <body>
-    <!--[if lt IE 8]>
-      <p class="browserupgrade">
-      You are using an <strong>outdated</strong> browser. Please
-      <a href="http://browsehappy.com/">upgrade your browser</a> to improve
-      your experience.
-      </p>
-    <![endif]-->
+        <header class="site-header">
+            <div class="site-branding">
+                <h1 class="site-name">
+                    <a href="https://karetsu.github.io/woffle" >woffle</a>&nbsp;&nbsp;<i class="fa fa-comments"></i>
+                </h1>
+                <h2 class="site-description">An NLP meta-API for dummies, by dummies</h2>
+            </div>
 
-    <div class="grid">
-      <div class="grid-item">Use me</div>
-      <div class="grid-item">Develop me</div>
-      <div class="grid-item">Ask a question</div>
-      <div class="grid-item">About</div>
-    </div>
+            <div class="button-line">
+                <a href="https://github.com/karetsu/woffle" target="_blank" class="btn btn-default">View on GitHub</a>
+                <a href="https://github.com/karetsu/woffle/zipball/master" class="btn btn-default hidden-xs">Download .zip</a>
+                <a href="https://github.com/karetsu/woffle/tarball/master" class="btn btn-default hidden-xs">Download .tar.gz</a>
+            </div>
 
-    <script>
-      $('.grid').isotope({
-        // <option value=""></option>s
-        itemSelector: '.grid-item',
-        layoutMode: 'fitRows'
-      });
-    </script>
-  </body>
+                            <a href="https://github.com/karetsu/woffle">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="./img/fork.png" alt="Fork me on GitHub" data-canonical-src="./img/fork.png">
+                </a>
+            
+            <div class="text-left visible-xs-block" style="margin-left: 15px;">
+                <a href="#sidebar" data-toggle="collapse"><i class="fa fa-3x fa-bars" aria-hidden="true"></i></a>
+            </div>
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                                    <nav id="sidebar" class="col-sm-3 col-lg-2 collapse in" role="navigation">
+                                                    <p class="text-muted">
+                                Home
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="active">
+                                        <a href="https://karetsu.github.io/woffle/index.html">
+                                            <i class='fa fa-angle-right'></i> Welcome
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="faq.html">
+                                            <i class='fa fa-angle-right'></i> FAQ
+                                        </a>
+                                    </li>
+                                                            </ul>
+                                                    <p class="text-muted">
+                                Themes
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="themes.html">
+                                            <i class='fa fa-angle-right'></i> Overview
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="hcluster.html">
+                                            <i class='fa fa-angle-right'></i> Hierarchical Clustering
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="sentiment.html">
+                                            <i class='fa fa-angle-right'></i> Sentiment Analysis
+                                        </a>
+                                    </li>
+                                                            </ul>
+                                                    <p class="text-muted">
+                                Advanced Use
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="advanced.html">
+                                            <i class='fa fa-angle-right'></i> Overview
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        
+                    </nav>
+
+                
+                <section class="col-sm-9 col-lg-10 content">
+                    <h1 id="welcome">Welcome</h1>
+<p>Please note that this is an active project so some of the instructions are
+incomplete and may not yet work. If you find one and there is not an issue
+already raised for it then please do so.</p>
+<h2 id="introduction">Introduction</h2>
+<p><code>woffle</code> is a project template which aims to allows you to compose various NLP
+tasks via a common interface using each of the most popular currently available
+tools. This includes</p>
+<ul>
+<li>spaCy</li>
+<li>fastText</li>
+<li>flair</li>
+<li>others coming soon</li>
+</ul>
+<p>The project was borne out of frustrations in trying to tie together all of the
+methods and attributes of each of popular NLP programs. I intend to have the
+program broken down into composable tasks where each task takes some 'sensible'
+default operations and when you import a specific part of the tool then it only
+exposes that one thing and these tasks will be separated by whether they are
+deterministic processing or whether the output is probabilistically generated
+(it makes it easier to control what models are left hanging around).</p>
+<p>Currently the tasks we aim to perform are</p>
+<ul>
+<li>
+<p><strong>parsing</strong></p>
+<p>including replacement of a list of regex strings defined in a configuration file</p>
+</li>
+<li>
+<p><strong>embedding</strong></p>
+<p>not only generating numeric vectors from your text using
+fasttext, spacy's gloVe implementation and similar but I envision that this
+should also include tasks such as topic modelling and semantic analysis
+purely because they are mappings from your text into some kind of
+representation space</p>
+</li>
+<li>
+<p><strong>clustering</strong></p>
+<p>deterministic (e.g. Ward linkage) clustering, density based clustering and
+some probabilistic clustering techniques are included - please see the
+themes section for your task to find out which is the default in your theme</p>
+</li>
+<li>
+<p><strong>selection</strong></p>
+<p>the ability to replace the content of a cluster
+with a representative 'label', in optimus this is based on functions of the
+cluster based on decisions on the content of the cluster but this could be as
+simple as replacing the the cluster with its sentiment score</p>
+</li>
+</ul>
+<p>These functions will be called the same thing regardless of which back end you
+use and most importantly they will be composable so that you can chain
+deterministic and probabilistic functions together, where it makes sense.</p>
+<p>A type checking tool (<a href="https://pyre-check.org">pyre</a>) will be available to
+ensure that any custom pipelines have functions of the same type before the
+program runs to prevent any late exceptions being raised.</p>
+<h2 id="installation">Installation</h2>
+<p>This program is intended for use on modern linux and macOS operating systems. If
+you wish to install it then perform the following actions to get a working
+environment including an installation of fasttext, flair and spacy.</p>
+<pre><code class="language-sh">git clone https://github.com/karetsu/woffle
+cd woffle
+make
+
+# If you also wish to download the `wiki.en.zip` vectors for fasttext then also do
+make ftmodel
+
+# and if you do not have a CUDA enabled GPU then you may wish to use the flair
+#models which are optimised for running on CPUs instead
+make flair-fast</code></pre>
+<h2 id="usage">Usage</h2>
+<p>This program is intended to give you a common toolkit without needing to know
+the model specific commands to perform the tasks. In order to use the program it
+is currently recommended to</p>
+<pre><code class="language-sh">git clone https://github.com/karetsu/woffle myProjectName</code></pre>
+<p>so that it provides a working directory for specific projects. Included is an
+example of how you would use the tool to do some simple parsing of an example
+dataset and return the cleaned target phrase for the sentence using a
+combination of deterministic (i.e. regex replacements) and probabilistic parsing
+(using spaCy) to achieve this goal.</p>
+<p>Below is the minimum code required in order to:</p>
+<ul>
+<li>perform regex based cleaning of the text</li>
+<li>clean text using spacy to identify root nouns</li>
+<li>select the first noun as the target noun</li>
+<li>embed the strings using fasttext</li>
+<li>perform a hierarchical clustering of the vectors</li>
+<li>perform a cutoff at depth 3 to generate clusters</li>
+<li>print all of the generated information</li>
+</ul>
+<pre><code class="language-python"># import the required parts of the toolkit
+from woffle.hcluster import parse, embed, cluster
+
+with open('data/test.txt') as handle:
+  text = handle.read().splitlines()
+
+target = parse(text)  # note, generator, not yet evaluated
+embed = [i for i in embed(target)] # clusters cannot yet use generators
+clusters = [i for i in cluster(embed, text, 3)]
+
+target = parse(text) # generator has been consumed at this point in the above!
+pairs  = ((i,j) for i,j in zip(text, target))
+for o, t in pairs:
+    entrant = [cluster.tolist() for cluster in clusters if o in cluster]
+    print(f"{o:&gt;30s}: {t:15s} -&gt; {entrant[0]}")</code></pre>
+<p>For more detailed and complex examples please see
+<a href="https://github.com/karetsu/woffle/tree/master/examples"><code>examples</code></a>.</p>
+                </section>
+
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="top-bar-line"></div>
+            <div class="bottom-panel">
+                <div class="text-center">
+            <span>
+                                    Made by karetsu  &gt;&gt;=  Built by Couscous
+                                                </span>
+                </div><!-- text-center -->
+            </div><!-- bottom-panel -->
+        </footer>
+
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://karetsu.github.io/woffle/js/highlight.pack.js"></script>
+
+        <script>
+            hljs.initHighlighting();
+
+            function checkWidth($highlight) {
+                if ($(window).width() < 768) {
+                    $highlight.addClass('collapse');
+                } else {
+                    $highlight.removeClass('collapse');
+                }
+            }
+
+            $(document).ready(function () {
+                var $highlights = $('.hljs');
+                $highlights.each(function (index) {
+                    var $this = $(this).parent();
+                    var elementId = 'hljs' + index;
+                    $this.attr('id', elementId);
+                    $this.before('<a class="visible-xs-inline visible-sm-inline" href="#' + elementId + '" data-toggle="collapse"><i class="fa fa-expand"></i>&nbsp;Toggle source code ...</a>');
+
+                    checkWidth($this);
+                    $(window).resize(function () {
+                        checkWidth($this);
+                    });
+                });
+            });
+
+            
+        </script>
+
+    </body>
 </html>
