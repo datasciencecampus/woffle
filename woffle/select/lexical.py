@@ -7,7 +7,7 @@ import functools
 import itertools
 
 from difflib import SequenceMatcher
-from typing import Callable, List, NewType, Set
+from typing import Callable, List, NewType, Set, Any
 
 # third party
 import numpy as np
@@ -37,8 +37,16 @@ with open('config.ini') as file:
 #               |_|    |_|                                 |___/
 #
 # -------------------------------------------------------------------------------
+def strip(xs:List[Any]) -> List[Any]:
+    return list(x for x in xs if x)
+
+
+def build(xs: List[str], clusters: List[int]) -> List[Array]:
+    return (np.extract(clusters == i, xs) for i in np.unique(clusters))
+
+
 def editMatrix(xs: List[str]) -> Array:
-    return np.array([[levenshtein(x,y) for y in xs] for x in xs])
+    return np.array([[levenshtein(x,y) for y in xs] for x in strip(xs)])
 
 
 def getMatch(x: str, y: str) -> str:
@@ -65,41 +73,51 @@ def wg_group(x:str) -> Set[str]:
 #
 # -------------------------------------------------------------------------------
 # maps levenshtein distance into the closed interval [0,1]
-def edCond(xs: List[str]) -> float:
+def editCond(xs: List[str]) -> float:
     "average edit distance on cluster"
+    xs_ = strip(xs)
     return (
-        1.0  # levenshtein returns 1 if they are identical
-        if len(xs) == 1
-        else np.mean([levenshtein(*ys) for ys in itertools.combinations(xs, 2)])
+        0.0  # levenshtein returns 1 if they are identical
+        if len(xs_) <= 1
+        else np.mean([levenshtein(*ys) for ys in itertools.combinations(xs_, 2)])
     )
 
 
 # wordgram measurement
-def wgCond(xs: List[str]) -> float:
+def wordCond(xs: List[str]) -> float:
     "average number of common words across the cluster"
+    xs_ = strip(xs)
     return (
-        1.0  #TODO: if there is only one thing then we must return no commonality?
-        if len(xs) == 1
+        0.0  #TODO: if there is only one thing then we must return no commonality?
+        if len(xs_) <= 1
         else np.mean([jaccard(x.split(), y.split())
-                      for x, y in itertools.combinations(xs, 2)])
+                      for x, y in itertools.combinations(xs_, 2)])
     )
 
 
 # charactergram measurement
-def ngCond(xs: List[str]) -> float:
+def charCond(xs: List[str]) -> float:
     "longest common ngram"
+    xs_ = strip(xs)
     return (
-        1.0 #TODO: if there is only one item then its vacuously 0?
-        if len(xs) == 1
-        else np.mean([jaccard(*ys) for ys in itertools.combinations(xs, 2)])
+        0.0 #TODO: if there is only one item then its vacuously 0?
+        if len(xs) <= 1
+        else np.mean([jaccard(*ys) for ys in itertools.combinations(xs_, 2)])
     )
 
 
-# +TODO: decide if there is a better than wordnet approach with spacy
+# TODO: decide if there is a better than wordnet approach with spacy
 # semantic similarity
-def hnCond(xs: List[str]) -> float:
+def hypeCond(xs: List[str]) -> float:
     "implement hypernym lookup"
-    return 0
+    xs_ = strip(xs)
+    return (
+        0.0
+        if len(xs_) <= 1
+        else 0.0
+    )
+# TODO: currently always run it, should perhaps check to see if there are enough
+# word in vocabulary in order to try to look them up?
 
 
 # -------------------------------------------------------------------------------
@@ -111,25 +129,28 @@ def hnCond(xs: List[str]) -> float:
 #
 # -------------------------------------------------------------------------------
 def edit(xs: List[str]) -> str:
-    return xs[np.sum(editMatrix(xs), axis=1).argmax()]
+    xs_ = strip(xs)
+    return xs_[np.sum(editMatrix(xs_), axis=1).argmax()]
 # selecting the word which has most similarity with all other words
 
 
 def wordgram(xs: List[str]) -> str:
-    common = (wg_group(x) for x in xs)
+    xs_ = strip(xs)
+    common = (wg_group(x) for x in xs_)
     return "".join(set.intersection(*common)).strip()
 
 
 def chargram(xs: List[str]) -> str:
-    return foldl1(getMatch, xs)
+    xs_ = strip(xs)
+    return foldl1(getMatch, xs_)
 
 
 def hypernyms(xs: List[str]) -> str:
-    return "Yep, I need to implement hypernym selector"
+    return "HYPE"
 
 
 def fallback(xs: List[str]) -> str:
-    return "Yep, I need to implement the fallback selector"
+    return ""
 
 
 # -------------------------------------------------------------------------------
@@ -144,10 +165,10 @@ def fallback(xs: List[str]) -> str:
 # given conditions on the cluster and a function to run in each condition then
 # do the following in a more abstract way
 decisions = (
-    lambda xs: edCond(xs) > config['edit'],  # high lexical similarity
-    lambda xs: wgCond(xs) > config['word'],  # medium lexical similarity
-    lambda xs: ngCond(xs) > config['char'],   # low lexical similarity
-    lambda xs: hnCond(xs) > config['hype'],  # semantic similarity
+    lambda xs: editCond(xs) > config['edit'],  # high lexical similarity
+    lambda xs: wordCond(xs) > config['word'],  # medium lexical similarity
+    lambda xs: charCond(xs) > config['char'],   # low lexical similarity
+    lambda xs: hypeCond(xs) > config['hype'],  # semantic similarity
     lambda xs: True  # default always true fallback
 )
 
@@ -170,10 +191,21 @@ functions = (
 #
 # -------------------------------------------------------------------------------
 # exposed default interfaces
-def represent(decisions, functions, cluster):
+def represent_(decisions, functions, group):
     for d, f in zip(decisions, functions):
-        if d(cluster):
-            return f(cluster)  # stops the first time that d(cluster) is true
+        if d(group):
+            return f(group)  # stops the first time that d(group) is true
 
-select_ = functools.partial(represent, decisions, functions)
-select = functools.partial(map, select_)
+represent = functools.partial(represent_, decisions, functions)
+
+
+def select_(xs: List[str], clusters: List[str], cluster: int) -> List[str]:
+    groups = build(xs, clusters)
+    labels = [represent(group) for group in groups]
+    return labels[cluster-1]
+
+
+def select(xs: List[str], clusters: List[str]) -> List[str]:
+    groups = build(xs, clusters)
+    labels = [represent(group) for group in groups]
+    return (labels[cluster-1] for cluster in clusters)

@@ -11,7 +11,7 @@ import re
 import toml
 
 # project
-from woffle.functions.compose import compose
+from woffle.functions.generics import compose
 
 
 #-- Definitions -----------------------------------------------------------------
@@ -35,9 +35,9 @@ encoding     = functools.partial(regexes, encode)
 
 
 # Composition -----------------------------------------------------------------
-parse_ = compose( str.strip
-                , encoding
+parse_ = compose( encoding
                 , replacements
+                , str.strip
                 )
 
 parse = functools.partial(map, parse_)

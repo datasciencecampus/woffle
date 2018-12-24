@@ -14,6 +14,7 @@ GREEN=\e[35m
 NONE=\e[0m
 BOLD=\e[1m
 
+
 START=${RED}ᐅ${NONE}
 END=⌁ \${BOLD}${GREEN}COMPLETE:${NONE}
 
@@ -33,9 +34,9 @@ dist-clean:
 	@printf "\r${END} dist-clean   \n"
 
 run:
-	@printf "${START} Running woffle"
+	@printf "${START} woffling\n"
 	@python main.py
-	@printf "\r${END} run            \n"
+	@printf "${END} run            \n"
 
 check:
 	@printf "${START} Performing type checks"
@@ -55,17 +56,20 @@ sentiment: py flair spacy
 #-- Package installation --------------------------------------------------------
 py:
 	@printf "${START} Installing: python environment"
-	@pip install -r requirements.txt 1>>$(LOGFILE)
+	@pip install --upgrade -r requirements.txt 1>>$(LOGFILE)
 	@printf "\r${END} python environment    \n"
 
 ft:
 	@printf "${START} Installing: fasttext"
+ifeq ($(shell uname -s), Darwin)
+	@export MACOSX_DEPLOYMENT_OPS=10.9
+endif
 	@pip install git+git://github.com/facebookresearch/fasttext.git 1>>$(LOGFILE)
 	@printf "\r${END} fasttext     \n"
 
 ftmodel:
 	@printf "${START} Installing: download fasttext model"
-	@curl -o models/wiki.en.zip https://s3-us-west-1.amazonaws.com/fasttext-vectors/wiki.en.zip
+	@curl -o models/wiki.en.zip https://s3-us-west-1.amazonaws.com/fasttext-vectors/wiki.en.zip 2>setup.log
 	@printf "\r${END} download fasttext model    \n"
 
 flair:

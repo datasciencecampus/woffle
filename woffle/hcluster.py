@@ -9,9 +9,11 @@ import woffle.parse.prob.spacy as pp
 from woffle.embed.numeric.fasttext import embed, embed_
 from woffle.cluster.deter import cluster
 
-from woffle.functions.compose import compose, compose_
+from woffle.functions.generics import compose, compose_
 
 from woffle.select.lexical import select, select_
 
-parse  = compose(pp.parse,  dp.parse)
-parse_ = compose(pp.parse_, dp.parse_)
+# parse  = compose(pp.parse,  dp.parse)
+# parse_ = compose(pp.parse_, dp.parse_)
+parse  = dp.parse
+parse_ = dp.parse_
