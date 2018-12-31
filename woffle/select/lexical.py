@@ -7,16 +7,18 @@ import functools
 import itertools
 
 from difflib import SequenceMatcher
-from typing import Callable, List, NewType, Set, Any
+from typing import Callable, List, NewType, Set, Any, Generator
 
 # third party
 import numpy as np
+import spacy
 import toml
 
+from spacy_wordnet.wordnet_annotator import WordnetAnnotator
 from textacy.similarity import levenshtein, jaccard, hamming
 
 # project
-from woffle.functions.lists import foldl, foldl1
+from woffle.functions.lists import foldl, foldl1, unpack, unpackG, mapmap
 
 
 # -- Type synonyms --------------------------------------------------------------
@@ -27,6 +29,11 @@ Array = NewType('Array', np.array)
 # -- Definitions ----------------------------------------------------------------
 with open('config.ini') as file:
     config = toml.load(file)['select']
+
+
+model = spacy.load('en_core_web_md')
+model.add_pipe(WordnetAnnotator(model.lang), after='tagger')
+
 
 # -------------------------------------------------------------------------------
 #  ____                                     _    _
@@ -54,14 +61,37 @@ def getMatch(x: str, y: str) -> str:
     return x[match.a : match.a + match.size]
 
 
-def wg_fetch(x: str, n: int) -> Set[str]:
+# -- wordgram -- #
+def wordgram_fetch(x: str, n: int) -> Set[str]:
     tokens = x.split()
     ngrams = (" ".join(tokens[i:i+n]) for i in range(len(tokens) - n + 1))
     return set(ngrams)
 
 
-def wg_group(x:str) -> Set[str]:
-    return set.union(*(wg_fetch(x, i) for i in range(1, len(x.split())+1)))
+def wordgram_group(x:str) -> Set[str]:
+    return set.union(*(wordgram_fetch(x, i) for i in range(1, len(x.split())+1)))
+
+
+# -- wordnet -- #
+def gencorpus_(model, xs : List[str]):
+    return map(model, xs)
+gencorpus = functools.partial(gencorpus_, model)
+
+
+def synsets(doc):
+    return (span._.wordnet.synsets() for span in doc)
+
+
+def hypernyms(xs):
+    return ([x.hypernym_distances() for x in xs])
+
+
+# currently:
+#   corpus = gencorpus(text)
+#   hnyms = mapmap(hypernyms, map(synsets, c))
+#   working = itertools.chain.from_iterable(hnyms)
+#
+
 
 
 # -------------------------------------------------------------------------------
@@ -136,7 +166,7 @@ def edit(xs: List[str]) -> str:
 
 def wordgram(xs: List[str]) -> str:
     xs_ = strip(xs)
-    common = (wg_group(x) for x in xs_)
+    common = (wordgram_group(x) for x in xs_)
     return "".join(set.intersection(*common)).strip()
 
 
@@ -146,6 +176,7 @@ def chargram(xs: List[str]) -> str:
 
 
 def hypernyms(xs: List[str]) -> str:
+
     return "HYPE"
 
 
