@@ -29,6 +29,9 @@ menu:
                 home:
                     text: "<i class='fa fa-angle-right'></i> Welcome"
                     relativeUrl: index.html
+                start:
+                    text: "<i class='fa fa-angle-right'></i> Getting Started"
+                    relativeUrl: getstarted.html
                 faq:
                     text: "<i class='fa fa-angle-right'></i> FAQ"
                     absoluteUrl: faq.html
