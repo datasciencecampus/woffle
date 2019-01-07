@@ -19,6 +19,7 @@ from textacy.similarity import levenshtein, jaccard, hamming
 
 # project
 from woffle.functions.lists import foldl, foldl1, unpack, unpackG, mapmap
+from woffle.parse.prob.spacy import parse
 
 
 # -- Type synonyms --------------------------------------------------------------
@@ -73,36 +74,23 @@ def wordgram_group(x:str) -> Set[str]:
 
 
 # -- wordnet -- #
-def gencorpus_(model, xs : List[str]):
-    return map(model, xs)
-gencorpus = functools.partial(gencorpus_, model)
+def gendoc_(model, x: str):
+    return model(str(x))
+gendoc = functools.partial(gendoc_, model)
+
+def gencorpus(xs: List[str]):
+    return map(gendoc, xs)
 
 
 # TODO: swap out lists for generators where possible
 def synsets(doc):
+    doc_ = [i for i in doc if i.pos_ == 'NOUN']
     return [span._.wordnet.synsets() for span in doc]
 
 
 def lca(syn1, syn2):
     # Find lowest common ancestor
     return syn1.lowest_common_hypernyms(syn2)
-
-# WIP:
-"""
-fruit = ['apple', 'pear', 'orange', 'lemon']
-corpus = [model(i) for i in fruit]
-
-syns = [i for doc in corpus for i in synsets(doc)]
-syns
->>> [[Synset('apple.n.01'), Synset('apple.n.02')], [Synset('pear.n.01'), Synset('pear.n.02')], [Synset('orange.s.01')], [Synset('lemon.n.01'), Synset('gamboge.n.02'), Synset('lemon.n.03'), Synset('lemon.n.04'), Synset('lemon.n.05')]]
-lengths = [len(s) for s in syns]
-lengths
->>> [2, 2, 1, 5]
-flatsyns = [j for i in syns for j in i]
-
-The plan is to run through the lengths, split on that number of things, take product of left with right, find lowest common hypernyms, consume the left and move on, throw away the left, use the right as the new part to split on the next size
-
-"""
 
 
 # -------------------------------------------------------------------------------
@@ -151,11 +139,10 @@ def charCond(xs: List[str]) -> float:
 # semantic similarity
 def hypeCond(xs: List[str]) -> float:
     "implement hypernym lookup"
-    xs_ = [i.strip() for i in xs]
     return (
         0.0
-        if len(xs_) <= 1
-        else 1.0
+        if len(xs) <= 1
+        else 0.0
     )
 # TODO: currently always run it, should perhaps check to see if there are enough
 # word in vocabulary in order to try to look them up?
@@ -186,11 +173,45 @@ def chargram(xs: List[str]) -> str:
     return foldl1(getMatch, xs_)
 
 
+# WIP
 def hypernyms(xs: List[str]) -> str:
+    corpus = list(gencorpus(xs))
+
+    syns = [i for doc in corpus for i in synsets(doc)]
+    lengths = [len(s) for s in syns]
+    flat = [j for i in syns for j in i]
+
+    flatM = flat  # mutable flat, in case we need the original
+
+    common = []
+
+    for length in lengths:
+        left  = flatM[:length]
+        right = flatM[length:]
+
+        for i, j in itertools.product(left, right):
+            common.append(lca(i,j))
+        flatM = right
+
+    # remove things which are too abstract
+    common = [j.name().split('.')[0] for i in common for j in i]
+    common = [i for i in common if i not in ('entity', 'whole', 'object')]
+
+    return common
 
 
+## the optimus version does this
+def hypernyms_(xs):
+    corpus = list(gencorpus(xs))
+    syns = [i[0] for doc in corpus for i in synsets(doc)]
 
+    ancestors = [k for i,j in itertools.combinations(syns, 2) for k in lca(i, j)]
 
+    try:
+        return max(ancestors, key=ancestors.count).name().split('.')[0].replace('_', ' ')
+    except:
+        return ''
+# /WIP
 
 
 def fallback(xs: List[str]) -> str:
@@ -221,7 +242,7 @@ functions = (
     lambda xs: edit(xs),  # high lexical similarity
     lambda xs: wordgram(xs),  # medium lexical similarity
     lambda xs: chargram(xs),  # low lexical similarity
-    lambda xs: hypernyms(xs),  # semantic similarity
+    lambda xs: hypernyms_(xs),  # semantic similarity  +TODO: replace this
     lambda xs: fallback(xs)  # default fallback
 )
 
