@@ -78,20 +78,31 @@ def gencorpus_(model, xs : List[str]):
 gencorpus = functools.partial(gencorpus_, model)
 
 
+# TODO: swap out lists for generators where possible
 def synsets(doc):
-    return (span._.wordnet.synsets() for span in doc)
+    return [span._.wordnet.synsets() for span in doc]
 
 
-def hypernyms(xs):
-    return ([x.hypernym_distances() for x in xs])
+def lca(syn1, syn2):
+    # Find lowest common ancestor
+    return syn1.lowest_common_hypernyms(syn2)
 
+# WIP:
+"""
+fruit = ['apple', 'pear', 'orange', 'lemon']
+corpus = [model(i) for i in fruit]
 
-# currently:
-#   corpus = gencorpus(text)
-#   hnyms = mapmap(hypernyms, map(synsets, c))
-#   working = itertools.chain.from_iterable(hnyms)
-#
+syns = [i for doc in corpus for i in synsets(doc)]
+syns
+>>> [[Synset('apple.n.01'), Synset('apple.n.02')], [Synset('pear.n.01'), Synset('pear.n.02')], [Synset('orange.s.01')], [Synset('lemon.n.01'), Synset('gamboge.n.02'), Synset('lemon.n.03'), Synset('lemon.n.04'), Synset('lemon.n.05')]]
+lengths = [len(s) for s in syns]
+lengths
+>>> [2, 2, 1, 5]
+flatsyns = [j for i in syns for j in i]
 
+The plan is to run through the lengths, split on that number of things, take product of left with right, find lowest common hypernyms, consume the left and move on, throw away the left, use the right as the new part to split on the next size
+
+"""
 
 
 # -------------------------------------------------------------------------------
@@ -140,11 +151,11 @@ def charCond(xs: List[str]) -> float:
 # semantic similarity
 def hypeCond(xs: List[str]) -> float:
     "implement hypernym lookup"
-    xs_ = strip(xs)
+    xs_ = [i.strip() for i in xs]
     return (
         0.0
         if len(xs_) <= 1
-        else 0.0
+        else 1.0
     )
 # TODO: currently always run it, should perhaps check to see if there are enough
 # word in vocabulary in order to try to look them up?
@@ -177,11 +188,13 @@ def chargram(xs: List[str]) -> str:
 
 def hypernyms(xs: List[str]) -> str:
 
-    return "HYPE"
+
+
+
 
 
 def fallback(xs: List[str]) -> str:
-    return ""
+    return ""  #+TODO: fallback is just an empty string to make updating easier
 
 
 # -------------------------------------------------------------------------------
@@ -240,3 +253,5 @@ def select(xs: List[str], clusters: List[str]) -> List[str]:
     groups = build(xs, clusters)
     labels = [represent(group) for group in groups]
     return (labels[cluster-1] for cluster in clusters)
+
+

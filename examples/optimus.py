@@ -29,10 +29,9 @@ def main():
 
     #+TODO: consider immutable version of this but its perhaps not really needed
     # mutable list to update the target words at each depth
-    targetM = target
+    targetM = target  # mutable target
 
     while numclusters > 1:
-
         print(f"** Depth {depth}")
         print("    -- embedding")
         embedding = list(embed(targetM))  ## TODO: clusters cannot currently take a map

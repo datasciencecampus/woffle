@@ -32,7 +32,7 @@ def main():
     ## themselves as this makes it very hard to reverse to apply the label to the
     ## original input
 
-    print(*zip(text, target, clusters, labels))
+    print(*zip(text, target, clusters, labels)
 
     for t, l in zip(text, labels):
         print(f"{t:>30s}: {l}")
