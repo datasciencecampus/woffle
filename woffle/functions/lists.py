@@ -40,3 +40,7 @@ def unpack(xxs: List[List[Any]]) -> List[Any]:
 
 def unpackG(xxs) -> Generator[Any, List[List[Any]], List[Any]]:
     return (x for xs in xxs for x in xs)
+
+def strip(xs : List[Any]) -> List[Any]:
+    # WARNING: alters lengths of list, use carefully
+    return [x for x in xs if x]
