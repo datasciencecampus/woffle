@@ -30,14 +30,14 @@ def condition(xs: List[str]) -> float:
     "average number of common words across the cluster"
     xs_ = strip(xs)
     return (
-        0.0 if (len(xs_) <= 1) or (max_len(xs_) < 3) else
-        scorer(xs_)[1]
+        0.0 if (len(xs_) <= 1) or (wordLen(xs_) < 3) else
+        scorer(xs_)
     )
 
 
 def selection(xs: List[str]) -> str:
     xs_ = strip(xs)
-    return scorer(xs_)[0]
+    return label(xs_)
 
 
 # -- Supporting functions -------------------------------------------------------
@@ -51,16 +51,23 @@ def group(x:str) -> Set[str]:
     return (x and set.union(*(fetch(x, i) for i in range(1, len(x.split())+1)))) or set()
 
 
-def max_len(xs: List[str]) -> int:
+def wordLen(xs: List[str]) -> int:
     tokens = map(str.split, xs)
     return max([len(w) for t in tokens for w in t])
 
 
 def scorer(xs: List[str]) -> float:
-   count    = [Counter(group(s)) for s in xs]
-   counts   = foldl(add, Counter(), count)
-   score    = lambda d: {i:(d[i]**2 * (1+log(len(i.split())))) for i in d}
-   scores   = score(counts)
-   r        = max(scores, key=lambda key: scores[key])
-   return r, scores[r]
-#+TODO: this is an over-complicated mechanism when a list of scores would work
+    score = (sum(i in j for j in xs)**2 * (1+log(len(i.split()))) for i in xs)
+    return max(score)
+
+
+def label(xs: List[str]) -> float:
+    ys = [j for i in xs for j in group(i)]
+    # score = (sum(i in j for j in ys)**2 * (1+log(len(i.split()))) for i in ys)
+    score = (sum(i == j for j in ys)**2 * (1+log(len(i.split()))) for i in ys)
+    nScore = (i / len(ys) for i in score)
+    return ys[nScore == max(nScore)]
+#TODO: this requires going over the list a couple of times, its pretty fast but
+#      could be better - if it becomes a resource hog then fix it
+#TODO: need to change score so that it stops counting against itself and the
+#      string it came from as this weighs words from long descriptions more
