@@ -6,10 +6,8 @@ wordgram decision metrics for lexical similarity of text
 # base
 import itertools
 
-from collections import Counter
 from typing import List, NewType, Set
 from math import log
-from operator import add
 
 # third party
 import numpy as np
