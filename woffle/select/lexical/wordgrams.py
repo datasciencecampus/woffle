@@ -30,16 +30,14 @@ def condition(xs: List[str]) -> float:
     "average number of common words across the cluster"
     xs_ = strip(xs)
     return (
-        0.0  #TODO: if there is only one thing then we must return no commonality?
-        if len(xs_) <= 1
-        else np.mean([jaccard(x.split(), y.split())
-                      for x, y in itertools.combinations(xs_, 2)])
+        0.0 if (len(xs_) <= 1) or (max_len(xs_) < 3) else
+        scorer(xs_)[1]
     )
+
 
 def selection(xs: List[str]) -> str:
     xs_ = strip(xs)
-    common = (group(x) for x in xs_)
-    return "".join(set.intersection(*common)).strip()
+    return scorer(xs_)[0]
 
 
 # -- Supporting functions -------------------------------------------------------
@@ -65,20 +63,4 @@ def scorer(xs: List[str]) -> float:
    scores   = score(counts)
    r        = max(scores, key=lambda key: scores[key])
    return r, scores[r]
-
 #+TODO: this is an over-complicated mechanism when a list of scores would work
-
-# -- Interfaces -----------------------------------------------------------------
-# wordgram measurement
-def condition(xs: List[str]) -> float:
-    "average number of common words across the cluster"
-    xs_ = strip(xs)
-    return (
-        0.0 if (len(xs_) <= 1) or (max_len(xs_) < 3) else
-        scorer(xs_)[1]
-    )
-
-
-def selection(xs: List[str]) -> str:
-    xs_ = strip(xs)
-    return scorer(xs_)[0]
