@@ -19,10 +19,13 @@ from spacy_wordnet.wordnet_annotator import WordnetAnnotator
 # project
 from woffle.functions.lists import strip
 
-
 # -- Type synonyms --------------------------------------------------------------
 # +TODO: figure out of we need any...
 Array = NewType('Array', np.array)
+Doc = NewType('Doc', spacy.tokens.doc.Doc)
+
+model = spacy.load('en_core_web_md')
+model.add_pipe(WordnetAnnotator(model.lang), after='tagger')
 
 
 # -- Interfaces -----------------------------------------------------------------
@@ -38,19 +41,15 @@ def condition(xs: List[str]) -> float:
 # TODO: currently always run it, should perhaps check to see if there are enough
 # word in vocabulary in order to try to look them up?
 
-def selection(*args):
-    pass
-
-# WIP/
-
-model = spacy.load('en_core_web_md')
-model.add_pipe(WordnetAnnotator(model), after='tagger')
+def selection(xs: List[str]) -> str:
+    return hypernyms(xs)
 
 
+#+TODO: this is horrific, but it just needs to work to start with
 def hypernyms(xs: List[str]) -> str:
-    corpus = list(gencorpus(xs))
+    corpus = map(roots, gencorpus(xs))
 
-    syns = [i for doc in corpus for i in synsets(doc)]
+    syns = [token._.wordnet.synsets() for token in corpus]
     lengths = [len(s) for s in syns]
     flat = [j for i in syns for j in i]
 
@@ -68,23 +67,14 @@ def hypernyms(xs: List[str]) -> str:
 
     # remove things which are too abstract
     common = [j.name().split('.')[0] for i in common for j in i]
-    common = [i for i in common if i not in ('entity', 'whole', 'object')]
+    common = [i for i in common if i not in ( 'entity'
+                                    , 'whole'
+                                    , 'object'
+                                    , 'matter'
+                                    , 'physical_entity')]
 
-    return common
+    return common[0].replace('_', ' ')
 
-
-## the optimus version does this
-def hypernyms_(xs):
-
-    corpus = list(gencorpus(xs))
-    syns = [i[0] for doc in corpus for i in synsets(doc)]
-
-    ancestors = [k for i,j in itertools.combinations(syns, 2) for k in lca(i, j)]
-
-    try:
-        return max(ancestors, key=ancestors.count).name().split('.')[0].replace('_', ' ')
-    except:
-        return ''
 
 # -- wordnet -- #
 def gendoc_(model, x: str):
@@ -95,16 +85,14 @@ def gencorpus(xs: List[str]):
     return map(gendoc, xs)
 
 
-# TODO: swap out lists for generators where possible
-def synsets(doc):
-    gd_ = lambda x: x if x.pos_ == 'NOUN' else ""
-    gd = lambda x: x if len(x) == 1 else gd_(x)
-    return [span._.wordnet.synsets() for span in gd(doc)]
-
-
 def lca(syn1, syn2):
     # Find lowest common ancestor
     return syn1.lowest_common_hypernyms(syn2)
 
-# /WIP
 
+#+TODO: replace
+# copy of woffle.parse.prob.spacy's roots
+def roots(tokens : Doc) -> List[str]:
+    return [*filter(lambda x: x.dep_ == 'ROOT', tokens)][0]
+
+#/wip

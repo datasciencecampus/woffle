@@ -24,7 +24,7 @@ def main():
 
     target = parse(text)
     embedding = list(embed(target))  ## TODO: ward linkage doesn't currently take a map
-    clusters = cluster(embedding, target, 4)
+    clusters = cluster(embedding, target, 10)
     labels = select(text, clusters)
 
     ## TODO: I think clusters should be numeric representation of the cluster that the
