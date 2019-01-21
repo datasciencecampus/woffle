@@ -59,7 +59,7 @@ def main():
         depth += 1
 
     print("** Writing output")
-    df = pd.DataFrame.from_dict(labels, orient='index')
+    df = pd.DataFrame.from_dict(labels, orient='index').transpose()
     df.to_csv('output/test.csv', index=False)
 
 
