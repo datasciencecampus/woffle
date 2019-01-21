@@ -13,7 +13,7 @@ from collections import Counter
 # third party
 import numpy as np
 
-from textacy.similarity import jaccard, levenshtein 
+from textacy.similarity import jaccard, levenshtein
 
 # project
 from woffle.functions.lists import strip, foldl1, unpack
@@ -28,7 +28,7 @@ def edits(s1: str,s2: str) -> float:
     normalised = levenshtein(s1, s2)
     maximum    = max(map(len,(s1,s2)))
     return maximum*(1 - normalised)
-    
+
 def characters(wl: List[str], start: int = 3, finish: int = 20):
     for word in wl:
         for n in range(start,finish):
@@ -46,9 +46,12 @@ def condition(xs: List[str]) -> float:
     "longest common ngram"
     xs_ = strip(xs)
     # +TODO: will require rethinking the sizes of thresholds
-    denom = np.mean([edits(*ys) for ys in itertools.combinations(xs_, 2)])
+    if len(xs_) == 1:
+        denom=0
+    else:
+        denom = np.mean([edits(*ys) for ys in itertools.combinations(xs_, 2)])
     return (
-        0.0 if len(xs) <= 1 #TODO: if there is only one item then its vacuously 0? 
+        0.0 if len(xs) <= 1 #TODO: if there is only one item then its vacuously 0?
         else scorer(xs_)[1]/(1+denom*log(len(xs)))
     )
 
