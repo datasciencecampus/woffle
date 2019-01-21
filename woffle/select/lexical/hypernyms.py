@@ -73,7 +73,8 @@ def hypernyms(xs: List[str]) -> str:
                                     , 'matter'
                                     , 'physical_entity')]
 
-    return common[0].replace('_', ' ')
+    return (len(common) and common[0].replace('_', ' ')) or ''
+    # if it cannot find a common hypernym returns empty string
 
 
 # -- wordnet -- #

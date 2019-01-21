@@ -2,7 +2,10 @@
 woffle implementation of https://github.com/datasciencecampus/optimus
 """
 
+print("** Importing woffle")
 # -- Imports ---------------------------------------------------------------------
+# third party
+import pandas as pd
 
 # Project
 from woffle.hcluster import parse, embed, cluster, select
@@ -16,13 +19,16 @@ def main():
     or RTFM
     """
 
+    print("** Preparing data")
     # load your data
     with open('data/test.txt') as handle:
         text = handle.read().splitlines()
         # list because I'm using it later, also works as a generator expression
         # we also use this instead of .readlines() because it doesn't give \n
 
+    print("    -- parsing")
     target = list(parse(text))
+    print("    -- clustering")
     numclusters = len(target)
     depth = 1
     labels = {}
@@ -51,6 +57,10 @@ def main():
             targetM = [i if i else j for i,j in zip(labels[f"tier_{depth}"], targetM)]
 
         depth += 1
+
+    print("** Writing output")
+    df = pd.DataFrame.from_dict(labels, orient='index')
+    df.to_csv('output/test.csv', index=False)
 
 
 # -- Boilerplate ----------------------------------------------------------------
