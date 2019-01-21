@@ -25,7 +25,7 @@ from woffle.functions.generics import id
 # -- Type synonyms ---------------------------------------------------------------
 # TODO: Pyre doesn't really pick up or enforce this type signiture unfortunately.
 # The type for the model is spacy.lang.en.English (for en_core_web_md)
-Model = NewType("Model", int)
+Model = NewType("Model", spacy.lang.en.English)
 
 
 # -- Definitions -----------------------------------------------------------------
