@@ -19,7 +19,7 @@ START=${RED}ᐅ${NONE}
 END=⌁ \${BOLD}${GREEN}COMPLETE:${NONE}
 
 #-- General ---------------------------------------------------------------------
-.PHONY: all almost py test ft flair spacy
+.PHONY: all almost py test ft flair spacy bert
 all: clean py ft ftmodel flair spacy
 almost: clean py ft flair spacy
 
@@ -92,5 +92,10 @@ spacy:
 	@pip install spacy 1>>$(LOGFILE)
 	@python -m spacy download en_core_web_md  1>>$(LOGFILE)
 	@printf "\r${END} spacy    \n"
+
+bert:
+	@printf "${START} Installing: bert"
+	@pip install torch pytorch-pretrained-bert1>>$(LOGFILE)
+	@printf "\r${END} bert    \n"
 
 # end
