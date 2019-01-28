@@ -30,14 +30,14 @@ def main():
     target = list(parse(text))
     print("    -- clustering")
     numclusters = len(target)
-    depth = 1
+    depth = 5
     labels = {}
 
     #+TODO: consider immutable version of this but its perhaps not really needed
     # mutable list to update the target words at each depth
     targetM = target  # mutable target
 
-    while depth < 10:
+    while depth < 31:
         print(f"** Depth {depth}")
         print("    -- embedding")
         embedding = list(embed(targetM))  ## TODO: clusters cannot currently take a map
@@ -56,14 +56,14 @@ def main():
             #+TODO: make this better
             targetM = [i if i else j for i,j in zip(labels[f"tier_{depth}"], targetM)]
 
-        depth += 1
+        depth += 5
 
     print("** Writing output")
 
     # make the output match optimus
     dty = labels
     dty['original'] = text
-    dty['current_labels'] = dty['tier_9']
+    dty['current_labels'] = dty['tier_30']
 
     df = pd.DataFrame.from_dict(dty, orient='index').transpose()
 
