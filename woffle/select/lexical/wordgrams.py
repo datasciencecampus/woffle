@@ -51,7 +51,7 @@ def group(x:str) -> Set[str]:
 
 def wordLen(xs: List[str]) -> int:
     tokens = map(str.split, xs)
-    return max([len(w) for t in tokens for w in t])
+    return np.min([len(w) for t in tokens for w in t])
 
 
 def scorer(xs: List[str]) -> float:
