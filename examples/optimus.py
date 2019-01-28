@@ -19,6 +19,10 @@ def main():
     or RTFM
     """
 
+    # thresholds
+    thresholds = (3, 15, 3)
+    #(start, end, step)
+
     print("** Preparing data")
     # load your data
     with open('data/test.txt') as handle:
@@ -30,14 +34,14 @@ def main():
     target = list(parse(text))
     print("    -- clustering")
     numclusters = len(target)
-    depth = 5
+    depth = thresholds[0]
     labels = {}
 
     #+TODO: consider immutable version of this but its perhaps not really needed
     # mutable list to update the target words at each depth
     targetM = target  # mutable target
 
-    while depth < 31:
+    while depth <= thresholds[1]:
         print(f"** Depth {depth}")
         print("    -- embedding")
         embedding = list(embed(targetM))  ## TODO: clusters cannot currently take a map
@@ -56,14 +60,14 @@ def main():
             #+TODO: make this better
             targetM = [i if i else j for i,j in zip(labels[f"tier_{depth}"], targetM)]
 
-        depth += 5
+        depth += thresholds[2]
 
     print("** Writing output")
 
     # make the output match optimus
     dty = labels
     dty['original'] = text
-    dty['current_labels'] = dty['tier_30']
+    dty['current_labels'] = dty[f'tier_{thresholds[1]}']
 
     df = pd.DataFrame.from_dict(dty, orient='index').transpose()
 
