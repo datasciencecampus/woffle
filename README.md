@@ -86,7 +86,7 @@ The standard installation, including an installation of fasttext (but without a
 model), flair and spacy looks like:
 
 ``` sh
-git clone https://github.com/karetsu/woffle
+git clone https://github.com/datasciencecampus/woffle
 cd woffle
 make
 ```
@@ -143,6 +143,6 @@ for o, t in pairs:
 ```
 
 For more on the included **themes** please see the
-[documentation](https://karetsu.github.io/woffle/themes.md). If you wish to
+[documentation](https://datasciencecampus.github.io/woffle/themes.md). If you wish to
 build your own back end then please see the instructions on the
-[website](https://karetsu.github.io/woffle).
+[website](https://datasciencecampus.github.io/woffle).

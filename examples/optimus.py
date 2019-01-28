@@ -21,7 +21,7 @@ def main():
 
     print("** Preparing data")
     # load your data
-    with open('data/845.csv') as handle:
+    with open('data/test.txt') as handle:
         text = handle.read().splitlines()
         # list because I'm using it later, also works as a generator expression
         # we also use this instead of .readlines() because it doesn't give \n
@@ -37,7 +37,7 @@ def main():
     # mutable list to update the target words at each depth
     targetM = target  # mutable target
 
-    while numclusters > 1:
+    while depth < 10:
         print(f"** Depth {depth}")
         print("    -- embedding")
         embedding = list(embed(targetM))  ## TODO: clusters cannot currently take a map
@@ -47,7 +47,7 @@ def main():
 
         if len(set(clusters)) == numclusters:
             print("    >> No new clusters generated")
-            labels[f"tier_{depth}"] = labels[f"tier_{depth-1}"]
+            labels[f"tier_{depth}"] = labels[f"tier_{depth-5}"]
         else:
             numclusters = len(set(clusters))
 
@@ -59,8 +59,19 @@ def main():
         depth += 1
 
     print("** Writing output")
-    df = pd.DataFrame.from_dict(labels, orient='index').transpose()
-    df.to_csv('output/test.csv', index=False)
+
+    # make the output match optimus
+    dty = labels
+    dty['original'] = text
+    dty['current_labels'] = dty['tier_9']
+
+    df = pd.DataFrame.from_dict(dty, orient='index').transpose()
+
+    # reordering to match optimus
+    #TODO: sloppy, fix up, look sharp
+    df_ = df[[df.columns[-2], *list(df.columns[:-3]), df.columns[-1]]]
+
+    df_.to_csv('output/test.csv', index=False)
 
 
 # -- Boilerplate ----------------------------------------------------------------

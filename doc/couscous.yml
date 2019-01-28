@@ -6,7 +6,7 @@ template:
     url: https://github.com/karetsu/couscous-waffle
 
 
-baseUrl: https://karetsu.github.io/woffle
+baseUrl: https://datasciencecampus.github.io/woffle
 
 github:
     user: karetsu
