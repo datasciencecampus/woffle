@@ -43,11 +43,6 @@ def selection(xs: List[str]) -> str:
 
 
 # -- Supporting functions -------------------------------------------------------
-def edits(s1: str,s2: str) -> float:
-    normalised = levenshtein(s1, s2)
-    maximum    = max(map(len,(s1,s2)))
-    return maximum*(1 - normalised)
-
 def characters(xs: List[str], start: int = 3, finish: int = 20):
     return unpack([get(x, n) for x in xs for n in range(start, finish)])
 
