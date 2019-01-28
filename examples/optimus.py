@@ -21,7 +21,7 @@ def main():
 
     print("** Preparing data")
     # load your data
-    with open('data/test.txt') as handle:
+    with open('data/845.csv') as handle:
         text = handle.read().splitlines()
         # list because I'm using it later, also works as a generator expression
         # we also use this instead of .readlines() because it doesn't give \n

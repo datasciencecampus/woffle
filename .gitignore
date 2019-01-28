@@ -18,3 +18,4 @@ models/*.bin
 models/*.vec
 data/*
 .mypy*
+output/*

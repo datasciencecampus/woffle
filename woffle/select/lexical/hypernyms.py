@@ -33,9 +33,10 @@ model.add_pipe(WordnetAnnotator(model.lang), after='tagger')
 # semantic similarity
 def condition(xs: List[str]) -> float:
     "implement hypernym lookup"
+    xs_ = strip(xs)
     return (
         0.0
-        if len(xs) <= 1
+        if len(xs_) <= 1
         else 1.0
     )
 # TODO: currently always run it, should perhaps check to see if there are enough
