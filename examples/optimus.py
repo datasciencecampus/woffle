@@ -63,7 +63,7 @@ def main():
     # make the output match optimus
     dty = labels
     dty['original'] = text
-    dty['current_labels'] = dty['tier_55']
+    dty['current_labels'] = dty['tier_9']
 
     df = pd.DataFrame.from_dict(dty, orient='index').transpose()
 
