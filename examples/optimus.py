@@ -21,7 +21,7 @@ def main():
 
     print("** Preparing data")
     # load your data
-    with open('data/845.csv') as handle:
+    with open('data/test.txt') as handle:
         text = handle.read().splitlines()
         # list because I'm using it later, also works as a generator expression
         # we also use this instead of .readlines() because it doesn't give \n
@@ -30,14 +30,14 @@ def main():
     target = list(parse(text))
     print("    -- clustering")
     numclusters = len(target)
-    depth = 5
+    depth = 1
     labels = {}
 
     #+TODO: consider immutable version of this but its perhaps not really needed
     # mutable list to update the target words at each depth
     targetM = target  # mutable target
 
-    while depth < 60:
+    while depth < 10:
         print(f"** Depth {depth}")
         print("    -- embedding")
         embedding = list(embed(targetM))  ## TODO: clusters cannot currently take a map
@@ -56,7 +56,7 @@ def main():
             #+TODO: make this better
             targetM = [i if i else j for i,j in zip(labels[f"tier_{depth}"], targetM)]
 
-        depth += 5
+        depth += 1
 
     print("** Writing output")
 
