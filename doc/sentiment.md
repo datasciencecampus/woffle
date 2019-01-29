@@ -6,7 +6,7 @@ currentMenu: sentiment
 
 The current implementation uses the rudamentary functionality
 available in the `TextBlob` python package.The `embed` function 
-uses polarity assign scores to strings which then can be used in
+uses polarity to assign scores to strings which then can be used in
 conjunction with clustering or other techniques. 
 
 # Sentiment module in woffle
