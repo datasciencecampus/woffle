@@ -101,13 +101,25 @@
                 
                 <section class="col-sm-9 col-lg-10 content">
                     <h1 id="sentiment-analysis">Sentiment Analysis</h1>
-<p>Performing sentiment analysis using inferSent. LDA and NMF will be included but
-not the default options.</p>
-<h2 id="default-options">Default options</h2>
-<h3 id="parsing">Parsing</h3>
-<h3 id="embedding">Embedding</h3>
-<h3 id="clustering">Clustering</h3>
-<h3 id="label-selection">Label Selection</h3>
+<p>The current implementation uses the rudamentary functionality
+available in the <code>TextBlob</code> python package.The <code>embed</code> function
+uses polarity to assign scores to strings which then can be used in
+conjunction with clustering or other techniques. </p>
+<h1 id="sentiment-module-in-woffle">Sentiment module in woffle</h1>
+<p>The sentiment part of woffle currently contains deterministic
+clustering, sentiment embed based on <code>TextBlob</code> and deterministic
+parsing.</p>
+<p>All of the following can be imported in python as:</p>
+<pre><code class="language-python">from woffle.sentiment import cluster, embed, parse</code></pre>
+<p>For an example pipeline please refer to the <code>sentiment.py</code> in
+the <code>examples</code> directory.</p>
+<h2 id="structure-of-the-example-file">Structure of the example file:</h2>
+<p>Firstly it imports the relevant parts of the pipeline as
+described in the previous section.</p>
+<p>It then loads in the <code>example_comments.txt</code> from the <code>data</code> folder
+then <code>parses</code> them and <code>embeds</code> them. </p>
+<p>These scores are then clustered and a rudamentary plot of the
+outcome of the clustering is presented. </p>
                 </section>
 
             </div>
