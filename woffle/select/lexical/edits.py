@@ -33,7 +33,7 @@ def condition(xs: List[str]) -> float:
         else np.mean([levenshtein(*ys) for ys in itertools.combinations(xs_, 2)])
     )
 
-
+#+TODO: selection doesnt run if you have an empty list or just 1 empty string
 def selection(xs: List[str]) -> str:
     xs_ = strip(xs)
     return xs_[np.sum(editMatrix(xs_), axis=1).argmax()]
