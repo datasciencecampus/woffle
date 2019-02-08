@@ -14,7 +14,11 @@ addons:
 
 # do the install, but only almost all because otherwise it takes hours
 install:
-  - make
+  - make 
+  - pip install flair
+  - python -c "import flair;flair.models.SequenceTagger.load('ner')" 
+  - python -c "import flair;flair.models.SequenceTagger.load('pos')"
+  - python -c "import flair;flair.embeddings.WordEmbeddings('en-news')"
 
 # check all branches
 branches:
