@@ -1,3 +1,5 @@
 toml
 textacy
 pyre-check
+pytest
+hypothesis
