@@ -44,14 +44,9 @@ check:
 	@pyre --search-path . check
 	@printf "${END} Completed type checks\n"
 
-test:
-	@printf "${END} Tests pending first rc or an uptake on PRs"
-
-
 #-- Task themes -----------------------------------------------------------------
 clustering: py ft ftmodel spacy
 sentiment: py flair spacy
-
 
 #-- Package installation --------------------------------------------------------
 py:
@@ -99,3 +94,10 @@ bert:
 	@printf "\r${END} bert    \n"
 
 # end
+
+#-- Testing and CI --------------------------------------------------------------
+
+run-test:
+	@printf "${START} Running tests \n"
+	@python -m pytest
+	@printf "\r${END} test    \n"
