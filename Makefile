@@ -97,7 +97,9 @@ bert:
 
 #-- Testing and CI --------------------------------------------------------------
 
-run-test:
+ci: almost test
+
+test:
 	@printf "${START} Running tests \n"
 	@python -m pytest
 	@printf "\r${END} test    \n"
