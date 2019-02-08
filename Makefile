@@ -21,7 +21,7 @@ END=⌁ \${BOLD}${GREEN}COMPLETE:${NONE}
 #-- General ---------------------------------------------------------------------
 .PHONY: all almost py test ft flair spacy bert
 all: clean py ft ftmodel flair spacy
-almost: clean py ft flair spacy
+almost: clean py ft spacy
 
 clean:
 	@printf "${START} Cleaning"
