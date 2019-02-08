@@ -20,8 +20,7 @@ install:
 branches:
   only:
 #    - gh-pages
-    - /.*/
+    - develop
 
-# skip tests for now
 script:
-  - pytest
+  - make run-test
