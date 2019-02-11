@@ -20,8 +20,8 @@ END=⌁ \${BOLD}${GREEN}COMPLETE:${NONE}
 
 #-- General ---------------------------------------------------------------------
 .PHONY: all almost py test ft flair spacy bert
-all: clean py ft ftmodel spacy
-almost: clean py ft spacy
+all: clean py ft ftmodel spacy wordnet
+almost: clean py ft spacy wordnet
 
 clean:
 	@printf "${START} Cleaning"
@@ -84,8 +84,15 @@ flair-fast:
 
 spacy:
 	@printf "${START} Installing: spacy"
-	@pip install spacy spacy-wordnet 1>>$(LOGFILE)
+	@pip install spacy  1>>$(LOGFILE)
 	@python -m spacy download en_core_web_md  1>>$(LOGFILE)
+	@printf "\r${END} spacy    \n"
+
+wordnet:
+	@printf "${START} Installing: wordnet"
+	@pip install spacy-wordnet  1>>$(LOGFILE)
+	@python -m nltk.downloader wordnet 1>>$(LOGFILE)
+	@python -m nltk.downloader omw 1>>$(LOGFILE)
 	@printf "\r${END} spacy    \n"
 
 bert:
