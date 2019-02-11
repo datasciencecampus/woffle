@@ -84,7 +84,7 @@ flair-fast:
 
 spacy:
 	@printf "${START} Installing: spacy"
-	@pip install spacy 1>>$(LOGFILE)
+	@pip install spacy spacy-wordnet 1>>$(LOGFILE)
 	@python -m spacy download en_core_web_md  1>>$(LOGFILE)
 	@printf "\r${END} spacy    \n"
 
