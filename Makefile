@@ -20,7 +20,7 @@ END=⌁ \${BOLD}${GREEN}COMPLETE:${NONE}
 
 #-- General ---------------------------------------------------------------------
 .PHONY: all almost py test ft flair spacy bert
-all: clean py ft ftmodel flair spacy
+all: clean py ft ftmodel spacy
 almost: clean py ft spacy
 
 clean:
