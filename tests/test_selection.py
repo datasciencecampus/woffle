@@ -2,7 +2,6 @@
 # third party
 import toml
 import spacy
-import flair
 import pytest
 import hypothesis.strategies as st
 
