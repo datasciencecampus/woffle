@@ -70,11 +70,6 @@ These functions will be called the same thing regardless of which back end you
 use and most importantly they will be composable so that you can chain
 deterministic and probabilistic functions together, where it makes sense.
 
-A type checking tool ([pyre](https://pyre-check.org)) will be available to
-ensure that any custom pipelines have functions of the same type before the
-program runs to prevent any late exceptions being raised. This is currently not
-yet implemented but is in the immediate tasks to perform.
-
 
 ## Installation
 
