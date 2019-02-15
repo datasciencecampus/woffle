@@ -13,12 +13,11 @@ github:
     repo: woffle
 
 title: woffle
-subTitle: An NLP meta-API for dummies, by dummies
+subTitle: An NLP project template for dummies, by dummies
 
 
 fontAwesomeIcon: fa fa-comments
-footerText: "Made by karetsu  >>=  Built by Couscous"
-
+footerText: "Made by DSC  >>=  Built by Couscous"
 
 
 menu:
@@ -29,6 +28,9 @@ menu:
                 home:
                     text: "<i class='fa fa-angle-right'></i> Welcome"
                     relativeUrl: index.html
+                features:
+                    text: "<i class='fa fa-angle-right'></i> Features"
+                    relativeUrl: features.html
                 start:
                     text: "<i class='fa fa-angle-right'></i> Getting Started"
                     relativeUrl: getstarted.html
