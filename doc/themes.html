@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/highlight.dark.css">
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="/">
+                The title
+                <small class="hidden-xs hidden-sm">
+                    This is the default subtitle!
+                </small>
+            </a>
+
+            
+        </header>
+
+        <main class="container">
+            <div class="row">
+
+                
+                <section id="content" class="col-sm-12">
+                    <h1 id="introduction">Introduction</h1>
+<p><code>woffle</code> is built to allow users to perform their NLP based tasks through a
+common interface regardless of their choice of back end processing. The
+directory hierarchy of the program is task based and because there are so many
+different tasks, which can be split further into probabilistic and deterministic
+tasks and so <code>the.import.namespaces.look.rather.messy.and.long</code>. To circumvent
+having to import these things for all tasks there are pre-packaged import blocks
+which we refer to as <strong>themes</strong>.</p>
+<p>A theme is a way of masking the import block for specific tasks giving the
+functions to use with less hassle. The following themes are included in the
+current version of the repository</p>
+<ul>
+<li><a href="hcluster.html"><strong>hierarchical clustering</strong></a></li>
+<li><a href="sentiment.html"><strong>sentiment analysis</strong></a></li>
+</ul>
+<p>Each theme comes with default parsing, embedding (sentiment can be
+considered as a mapping from a string into a numeric representation space so the
+interface is still referred to as an embedding), clustering and representative
+label selection for the cluster options. Please see the links above (or in the
+sidebar) for instructions on how to use each of these themes and what their
+default builds look like.</p>
+<p>If a theme does not meet your needs then I hope that this project makes it easy
+enough for you to compose your own processing means. Each step is supposed to be
+composable with the previous so long as the correct data type is presented at
+each return statement. For more information on how to build a custom processing
+procedure then please see the <a href="advanced.html">advanced use</a> page.</p>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>

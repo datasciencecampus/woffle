@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/highlight.dark.css">
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="/">
+                The title
+                <small class="hidden-xs hidden-sm">
+                    This is the default subtitle!
+                </small>
+            </a>
+
+            
+        </header>
+
+        <main class="container">
+            <div class="row">
+
+                
+                <section id="content" class="col-sm-12">
+                    <p><code>woffle</code> aims to be an opinionated (but sensible) project template for the
+majority of your language processing tasks.</p>
+<p>What this means is that by default it <em>prefers</em> some tools over others. However,
+we have tried to make it as easy as possible for you to quickly add your own
+code in to perform additional functionality whilst still fitting
+in and communicating well with all of the other pieces.</p>
+<p>Working on projects such as
+<a href="https://github.com/datasciencecampus/pygrams">pyGrams</a>,
+<a href="https://github.com/datasciencecampus/pelican_cove">pelican cove</a> and
+<a href="https://github.com/datasciencecampus/optimus">optimus</a> it became clear that our
+NLP projects generally consist of up to 4 tasks.</p>
+<ol>
+<li><strong>Parsing</strong>
+Data tends to need cleaning before we can really do a lot of NLP stuff with
+it.</li>
+<li><strong>Embedding</strong>
+Because computers are really bad at understanding language we come
+pre-packed with various ways of converting all of that text into numbers so
+that youre computer can do stuff. This can sometimes seem like a contrivance
+where we consider sentiment scores for text as an 'embedding' but all we
+mean is &quot;generating a numeric representation for text&quot; and this hopefully
+follows.</li>
+<li><strong>Clustering</strong>
+Whether grouping sentences with like sentiment, generating hierarchical
+classifications of text or looking at some density based clustering
+mechanisms it often helps to collect things that are similar to understand
+what is going on.</li>
+<li><strong>Selection</strong>
+Oftentimes, such as when generating a hierarchical classification of things,
+we want to replace a cluster of text with a single entity in some way.</li>
+</ol>
+<p>Now I'll be able to do these faster and with less code using <code>woffle</code>. If you
+wish to implement your task using woffle then please see <a href="./getstarted.html">Getting
+Started</a>.</p>
+                </section>
+
+            </div>
+        </main>
+
+        <footer>
+            <div class="container">
+                <p class="text-muted">
+                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>
