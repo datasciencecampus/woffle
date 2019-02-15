@@ -4,186 +4,178 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title></title>
+        <title>woffle</title>
 
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/css/highlight.dark.css">
-        <link rel="stylesheet" href="/css/main.css">
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Fira+Mono" rel="stylesheet">
+        <link rel="stylesheet" href="https://datasciencecampus.github.io/woffle/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://datasciencecampus.github.io/woffle/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://datasciencecampus.github.io/woffle/css/dracula.css">
+        <link rel="stylesheet" href="https://datasciencecampus.github.io/woffle/css/main.css">
     </head>
     <body>
 
-        <header class="navbar navbar-default navbar-fixed-top">
+        <header class="site-header">
+            <div class="site-branding">
+                <h1 class="site-name">
+                    <a href="https://datasciencecampus.github.io/woffle" >woffle</a>&nbsp;&nbsp;<i class="fa fa-comments"></i>
+                </h1>
+                <h2 class="site-description">An NLP project template for dummies, by dummies</h2>
+            </div>
 
-            <a class="navbar-brand" href="/">
-                The title
-                <small class="hidden-xs hidden-sm">
-                    This is the default subtitle!
-                </small>
-            </a>
+            <div class="button-line">
+                <a href="https://github.com/karetsu/woffle" target="_blank" class="btn btn-default">View on GitHub</a>
+                <a href="https://github.com/karetsu/woffle/zipball/master" class="btn btn-default hidden-xs">Download .zip</a>
+                <a href="https://github.com/karetsu/woffle/tarball/master" class="btn btn-default hidden-xs">Download .tar.gz</a>
+            </div>
 
+                            <a href="https://github.com/karetsu/woffle">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="./img/fork.png" alt="Fork me on GitHub" data-canonical-src="./img/fork.png">
+                </a>
             
+            <div class="text-left visible-xs-block" style="margin-left: 15px;">
+                <a href="#sidebar" data-toggle="collapse"><i class="fa fa-3x fa-bars" aria-hidden="true"></i></a>
+            </div>
         </header>
 
-        <main class="container">
+        <main class="container-fluid">
             <div class="row">
 
+                                    <nav id="sidebar" class="col-sm-3 col-lg-2 collapse in" role="navigation">
+                                                    <p class="text-muted">
+                                Home
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="active">
+                                        <a href="https://datasciencecampus.github.io/woffle/index.html">
+                                            <i class='fa fa-angle-right'></i> Welcome
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://datasciencecampus.github.io/woffle/features.html">
+                                            <i class='fa fa-angle-right'></i> Features
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="https://datasciencecampus.github.io/woffle/getstarted.html">
+                                            <i class='fa fa-angle-right'></i> Getting Started
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="faq.html">
+                                            <i class='fa fa-angle-right'></i> FAQ
+                                        </a>
+                                    </li>
+                                                            </ul>
+                                                    <p class="text-muted">
+                                Themes
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="themes.html">
+                                            <i class='fa fa-angle-right'></i> Overview
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="hcluster.html">
+                                            <i class='fa fa-angle-right'></i> Hierarchical Clustering
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="sentiment.html">
+                                            <i class='fa fa-angle-right'></i> Sentiment Analysis
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        
+                    </nav>
+
                 
-                <section id="content" class="col-sm-12">
-                    <h1 id="woffle">woffle</h1>
-<p><a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not
-yet been a stable, usable release suitable for the
-public." /></a></p>
-<p><a href="https://travis-ci.com/datasciencecampus/woffle"><img src="https://travis-ci.com/datasciencecampus/woffle.svg?branch=develop" alt="Build Status" /></a></p>
-<p>Please note that this is an active project so some of the instructions are
-incomplete and may not yet work. If you find one and there is not an issue
-already raised for it then please do so. PRs welcome.</p>
-<p>As a follow on from <a href="https://github.com/datasciencecampus/optimus">optimus</a> this
-will allow extension of the work to include
-arbitrary user defined means of processing their text. The initial aim of this
-is to turn optimus from the sprawling tangle of classes that it is into a pure
-as possible functional program.</p>
-<p>Eventually it will be a way to tie together all your NLP tasks and give you the
-option to use whatever back end you like but through a common interface.</p>
-<h2 id="introduction">Introduction</h2>
-<p><code>woffle</code> is a project template which aims to allows you to compose various NLP
-tasks via a common interface using each of the most popular currently available
-tools. This includes</p>
-<ul>
-<li>spaCy</li>
-<li>fastText</li>
-<li>flair</li>
-<li>others coming soon</li>
-</ul>
-<p>The project was borne out of frustrations in trying to tie together all of the
-methods and attributes of each of popular NLP programs. I intend to have the
-program broken down into composable tasks where each task takes some 'sensible'
-default operations and when you import a specific part of the tool then it only
-exposes that one thing and these tasks will be separated by whether they are
-deterministic processing or whether the output is probabilistically generated
-(it makes it easier to control what models are left hanging around).</p>
-<p>Currently the tasks we aim to perform are</p>
-<ul>
-<li>
-<p><strong>parsing</strong></p>
-<p>including replacement of a list of regex strings defined in a configuration file</p>
-</li>
-<li>
-<p><strong>embedding</strong></p>
-<p>not only generating numeric vectors from your text using
-fasttext, spacy's gloVe implementation and similar but I envision that this
-should also include tasks such as topic modelling and semantic analysis
-purely because they are mappings from your text into some kind of
-representation space</p>
-</li>
-<li>
-<p><strong>clustering</strong></p>
-<p>deterministic (e.g. Ward linkage) clustering and proabilitistic clustering
-will be included</p>
-</li>
-<li>
-<p><strong>selection</strong></p>
-<p>the ability to replace the content of a cluster
-with a representative 'label', in optimus this is based on functions of the
-cluster based on decisions on the content of the cluster but this could be as
-simple as replacing the the cluster with its sentiment score</p>
-</li>
-</ul>
-<p>These functions will be called the same thing regardless of which back end you
-use and most importantly they will be composable so that you can chain
-deterministic and probabilistic functions together, where it makes sense.</p>
-<h2 id="installation">Installation</h2>
-<p><code>woffle</code> is intended for use on modern linux and macOS operating systems. This
-is due to the dependency on GNU <code>make</code>, <code>curl</code> et al. (see the contents of
-<code>Makefile</code> for more details. If you are comfortable setting up the dependencies
-in Windows I don't believe that there is a reason it should not work.</p>
-<p>The standard installation, including an installation of fasttext (but without a
-model) and spacy looks like:</p>
-<pre><code class="language-sh">git clone https://github.com/datasciencecampus/woffle
-cd woffle
-make</code></pre>
-<p>If you also wish to download the <code>wiki.en.zip</code> vectors for fasttext then add:</p>
-<pre><code class="language-sh">make ftmodel</code></pre>
-<p>and if you do not have a CUDA enabled GPU then you may wish to use the flair-fast
-models which are optimised for running on CPUs instead:</p>
-<pre><code class="language-sh">make flair-fast</code></pre>
-<p>else just install </p>
-<pre><code class="language-sh">make flair</code></pre>
-<p>If you'd like to use the <a href="https://github.com/huggingface/pytorch-pretrained-BERT">pytorch-pretrained-BERT</a>
-embeddings, run:</p>
-<pre><code class="language-sh">make bert</code></pre>
-<p>Please note the implementation of these embeddings is experimental and fairly simplistic
-however it conforms to the overall woffle standard of use and is accessible in the same way
-as other embeddings. </p>
-<h2 id="tests">Tests</h2>
-<p>Currently the repository is in WIP. There are rudimentary tests set up for a variety
-of components and CI is set up on Travis. The status of the build can be seen on the
-badge at the top of this README. </p>
-<p>If you would like to run tests yourself, you can use any of the following commands:</p>
-<pre><code class="language-sh">make 
-make test
-
-# ---- OR ---- 
-
-make ci</code></pre>
-<h2 id="usage">Usage</h2>
-<p>The intention of this repo is to provide a working example from which to base
-your own processing. Below is the minimum code required in order to:</p>
-<ul>
-<li>perform regex based cleaning of the text</li>
-<li>clean text using spacy to identify root nouns</li>
-<li>select the first noun as the target noun</li>
-<li>embed the strings using fasttext</li>
-<li>perform a hierarchical clustering of the vectors</li>
-<li>perform a cutoff at depth 3 to generate clusters</li>
-<li>print all of the generated information</li>
-</ul>
-<p>This accepts the default actions and structure of the 'hcluster' (hierarchical
-clustering) theme. Should you want to 'roll your own' processing please see the
-manual on the website.</p>
-<pre><code class="language-python"># import the required parts of the toolkit
-from woffle.hcluster import parse, embed, cluster
-
-with open('data/test.txt') as handle:
-  text = handle.read().splitlines()
-
-target = parse(text)  # note, generator, not yet evaluated
-embed = [i for i in embed(target)] # clusters cannot yet use generators
-clusters = [i for i in cluster(embed, text, 3)]
-
-target = parse(text) # generator has been consumed at this point in the above!
-pairs  = ((i,j) for i,j in zip(text, target))
-for o, t in pairs:
-    entrant = [cluster.tolist() for cluster in clusters if o in cluster]
-    print(f"{o:&gt;30s}: {t:15s} -&gt; {entrant[0]}")
-</code></pre>
-<p>For more on the included <strong>themes</strong> please see the
-<a href="https://datasciencecampus.github.io/woffle/themes.html">documentation</a>. If you wish to
-build your own back end then please see the instructions on the
-<a href="https://datasciencecampus.github.io/woffle">website</a>.</p>
+                <section class="col-sm-9 col-lg-10 content">
+                    <p><code>woffle</code> aims to be an opinionated (but sensible) project template for the
+majority of your language processing tasks.</p>
+<p>What this means is that by default it <em>prefers</em> some tools over others. However,
+we have tried to make it as easy as possible for you to quickly add your own
+code in to perform additional functionality whilst still fitting
+in and communicating well with all of the other pieces.</p>
+<p>Working on projects such as
+<a href="https://github.com/datasciencecampus/pygrams">pyGrams</a>,
+<a href="https://github.com/datasciencecampus/pelican_cove">pelican cove</a> and
+<a href="https://github.com/datasciencecampus/optimus">optimus</a> it became clear that our
+NLP projects generally consist of up to 4 tasks.</p>
+<ol>
+<li><strong>Parsing</strong>
+Data tends to need cleaning before we can really do a lot of NLP stuff with
+it.</li>
+<li><strong>Embedding</strong>
+Because computers are really bad at understanding language we come
+pre-packed with various ways of converting all of that text into numbers so
+that youre computer can do stuff. This can sometimes seem like a contrivance
+where we consider sentiment scores for text as an 'embedding' but all we
+mean is &quot;generating a numeric representation for text&quot; and this hopefully
+follows.</li>
+<li><strong>Clustering</strong>
+Whether grouping sentences with like sentiment, generating hierarchical
+classifications of text or looking at some density based clustering
+mechanisms it often helps to collect things that are similar to understand
+what is going on.</li>
+<li><strong>Selection</strong>
+Oftentimes, such as when generating a hierarchical classification of things,
+we want to replace a cluster of text with a single entity in some way.</li>
+</ol>
+<p>Now I'll be able to do these faster and with less code using <code>woffle</code>. If you
+wish to implement your task using woffle then please see <a href="./getstarted.html">Getting
+Started</a>.</p>
                 </section>
 
             </div>
         </main>
 
-        <footer>
-            <div class="container">
-                <p class="text-muted">
-                    website generated with <a href="http://couscous.io" title="Markdown website generator">Couscous</a>
-                </p>
-            </div>
+        <footer class="site-footer">
+            <div class="top-bar-line"></div>
+            <div class="bottom-panel">
+                <div class="text-center">
+            <span>
+                                    Made by DSC  &gt;&gt;=  Built by Couscous
+                                                </span>
+                </div><!-- text-center -->
+            </div><!-- bottom-panel -->
         </footer>
 
+
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-        <script src="//yastatic.net/highlightjs/8.2/highlight.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://datasciencecampus.github.io/woffle/js/highlight.pack.js"></script>
 
         <script>
-            $(function() {
-                $("section>h1").wrap('<div class="page-header" />');
-                // Syntax highlighting
-                hljs.initHighlightingOnLoad();
+            hljs.initHighlighting();
+
+            function checkWidth($highlight) {
+                if ($(window).width() < 768) {
+                    $highlight.addClass('collapse');
+                } else {
+                    $highlight.removeClass('collapse');
+                }
+            }
+
+            $(document).ready(function () {
+                var $highlights = $('.hljs');
+                $highlights.each(function (index) {
+                    var $this = $(this).parent();
+                    var elementId = 'hljs' + index;
+                    $this.attr('id', elementId);
+                    $this.before('<a class="visible-xs-inline visible-sm-inline" href="#' + elementId + '" data-toggle="collapse"><i class="fa fa-expand"></i>&nbsp;Toggle source code ...</a>');
+
+                    checkWidth($this);
+                    $(window).resize(function () {
+                        checkWidth($this);
+                    });
+                });
             });
+
+            
         </script>
 
     </body>
