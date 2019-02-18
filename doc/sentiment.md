@@ -4,15 +4,34 @@ currentMenu: sentiment
 
 # Sentiment Analysis
 
-Performing sentiment analysis using inferSent. LDA and NMF will be included but
-not the default options.
+The current implementation uses the rudamentary functionality
+available in the `TextBlob` python package.The `embed` function 
+uses polarity to assign scores to strings which then can be used in
+conjunction with clustering or other techniques. 
 
-## Default options
+# Sentiment module in woffle
 
-### Parsing
+The sentiment part of woffle currently contains deterministic
+clustering, sentiment embed based on `TextBlob` and deterministic
+parsing.
 
-### Embedding
+All of the following can be imported in python as:
 
-### Clustering
+```python
+from woffle.sentiment import cluster, embed, parse
+``` 
 
-### Label Selection
+For an example pipeline please refer to the `sentiment.py` in
+the `examples` directory.
+
+## Structure of the example file:
+
+Firstly it imports the relevant parts of the pipeline as 
+described in the previous section.
+
+It then loads in the `example_comments.txt` from the `data` folder
+then `parses` them and `embeds` them. 
+
+These scores are then clustered and a rudamentary plot of the
+outcome of the clustering is presented. 
+

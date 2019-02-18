@@ -22,17 +22,19 @@ from woffle.functions.generics import compose
 from woffle.functions.generics import id
 
 
-# -- Type synonyms ---------------------------------------------------------------
-# TODO: Pyre doesn't really pick up or enforce this type signiture unfortunately.
-# The type for the model is spacy.lang.en.English (for en_core_web_md)
-Model = NewType("Model", spacy.lang.en.English)
-
-
 # -- Definitions -----------------------------------------------------------------
 
 # variables
 config = toml.load("config.ini")
-model = spacy.load(config["spacy"]["model"])
+model  = spacy.load(config["spacy"]["model"])
+
+
+# -- Type synonyms ---------------------------------------------------------------
+# TODO: Pyre doesn't really pick up or enforce this type signiture unfortunately.
+# The type for the model is spacy.lang.en.English (for en_core_web_md)
+#+TODO: This messes up the tests. Until you load a spacy model
+# spacy doesn't have a .lang.en.English part. 
+Model = NewType("Model", spacy.lang.en.English)
 
 
 # functions

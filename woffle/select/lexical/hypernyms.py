@@ -18,9 +18,9 @@ from spacy_wordnet.wordnet_annotator import WordnetAnnotator
 
 # project
 from woffle.functions.lists import strip
+from woffle.parse.prob.spacy import roots
 
 # -- Type synonyms --------------------------------------------------------------
-# +TODO: figure out of we need any...
 Array = NewType('Array', np.array)
 Doc = NewType('Doc', spacy.tokens.doc.Doc)
 
@@ -29,7 +29,6 @@ model.add_pipe(WordnetAnnotator(model.lang), after='tagger')
 
 
 # -- Interfaces -----------------------------------------------------------------
-# TODO: decide if there is a better than wordnet approach with spacy
 # semantic similarity
 def condition(xs: List[str]) -> float:
     "implement hypernym lookup"
@@ -39,14 +38,11 @@ def condition(xs: List[str]) -> float:
         if len(xs_) <= 1
         else 1.0
     )
-# TODO: currently always run it, should perhaps check to see if there are enough
-# word in vocabulary in order to try to look them up?
 
 def selection(xs: List[str]) -> str:
     return hypernyms(xs)
 
 
-#+TODO: this is horrific, but it just needs to work to start with
 def hypernyms(xs: List[str]) -> str:
     corpus = map(roots, gencorpus(xs))
 
@@ -68,6 +64,7 @@ def hypernyms(xs: List[str]) -> str:
 
     # remove things which are too abstract
     common = [j.name().split('.')[0] for i in common for j in i]
+    # TODO - replace this with a config file list of these things
     common = [i for i in common if i not in ( 'entity'
                                     , 'whole'
                                     , 'object'
@@ -90,11 +87,3 @@ def gencorpus(xs: List[str]):
 def lca(syn1, syn2):
     # Find lowest common ancestor
     return syn1.lowest_common_hypernyms(syn2)
-
-
-#+TODO: replace
-# copy of woffle.parse.prob.spacy's roots
-def roots(tokens : Doc) -> List[str]:
-    return [*filter(lambda x: x.dep_ == 'ROOT', tokens)][0]
-
-#/wip
