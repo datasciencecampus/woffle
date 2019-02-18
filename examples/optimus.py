@@ -21,7 +21,8 @@ def main():
 
     # thresholds
     thresholds = (3, 15, 3)
-    #(start, end, step)
+    # (start, end, step) in N^3
+    # start >= 1, end > start, step > 0
 
     print("** Preparing data")
     # load your data
@@ -37,27 +38,24 @@ def main():
     depth = thresholds[0]
     labels = {}
 
-    #+TODO: consider immutable version of this but its perhaps not really needed
-    # mutable list to update the target words at each depth
-    targetM = target  # mutable target
+    targetM = target.copy()  # mutable target
 
     while depth <= thresholds[1]:
         print(f"** Depth {depth}")
         print("    -- embedding")
-        embedding = list(embed(targetM))  ## TODO: clusters cannot currently take a map
+        embedding = list(embed(targetM))
 
         print(f"    -- clustering")
-        clusters = cluster(embedding, targetM, depth)
+        clusters = cluster(embedding, depth)
 
         if len(set(clusters)) == numclusters:
             print("    >> No new clusters generated")
-            labels[f"tier_{depth}"] = labels[f"tier_{depth-5}"]
+            labels[f"tier_{depth}"] = labels[f"tier_{depth-thresholds[2]}"]
         else:
             numclusters = len(set(clusters))
 
             print("    -- generating labels")
             labels[f"tier_{depth}"] = list(select(targetM, clusters))
-            #+TODO: make this better
             targetM = [i if i else j for i,j in zip(labels[f"tier_{depth}"], targetM)]
 
         depth += thresholds[2]
@@ -72,7 +70,6 @@ def main():
     df = pd.DataFrame.from_dict(dty, orient='index').transpose()
 
     # reordering to match optimus
-    #TODO: sloppy, fix up, look sharp
     df_ = df[[df.columns[-2], *list(df.columns[:-3]), df.columns[-1]]]
 
     df_.to_csv('output/test.csv', index=False)

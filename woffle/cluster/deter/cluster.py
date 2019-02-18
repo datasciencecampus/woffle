@@ -29,8 +29,6 @@ def z(embedding : Array) -> Array:
 def fetch(depth: float, links: Array) -> Array:
     return clus.fcluster(links, depth, criterion="distance")
 
-#+TODO: The xs parameter is redundant
-#+TODO: figure out how this works and make it nicer
-#+TODO: Typing is not correct on the result. It outputs an np.ndarray
-def cluster(embedding: Array, xs: [str], depth: float) -> List[Array]:
+
+def cluster(embedding: Array, depth: float) -> Array:
     return fetch(depth, z(embedding))
