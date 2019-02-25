@@ -21,7 +21,7 @@ All of the following can be imported in python as:
 from woffle.sentiment import cluster, embed, parse
 ``` 
 
-For an example pipeline please refer to the `sentiment.py` in
+For an example pipeline please refer to `sentiment.py` in
 the `examples` directory.
 
 ## Structure of the example file:
