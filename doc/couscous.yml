@@ -9,7 +9,7 @@ template:
 baseUrl: https://datasciencecampus.github.io/woffle
 
 github:
-    user: karetsu
+    user: datasciencecampus
     repo: woffle
 
 title: woffle
