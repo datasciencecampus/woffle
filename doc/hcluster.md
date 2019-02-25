@@ -35,6 +35,9 @@ obtain its real valued vector representations of the text it is given. This is
 chosen as it is very good at dealing with words which are out of dictionary,
 which more traditional embeddings such as word2vec and gloVe cannot handle. 
 
+The `embed` function is really just a wrapper around
+`map(fasttext.get_word_vector, yourData)`.
+
 
 ### Clustering
 
@@ -45,6 +48,9 @@ However, it is very good for generating clusters for use in creating a
 hierarchy. At a given depth the `cluster()` function will return which points
 have been clustered at that point, including all of those which are still
 singletons. 
+
+`cluster` makes use of scipy's linkage function and the associated functions for
+obtaining the clusters.
 
 
 ### Label Selection
