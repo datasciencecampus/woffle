@@ -5,7 +5,8 @@ currentMenu: start
 
 This program is intended for use on modern linux and macOS operating systems. If
 you wish to install it then perform the following actions to get a working
-environment including an installation of fasttext, flair and spacy.
+environment including an installation of fasttext, flair and spacy you should
+need nothing more than `git` and `GNU make`
 
 ```sh
 git clone https://github.com/karetsu/woffle
