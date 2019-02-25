@@ -128,6 +128,8 @@ can enable removal of long common words which can influence embeddings negativel
 obtain its real valued vector representations of the text it is given. This is
 chosen as it is very good at dealing with words which are out of dictionary,
 which more traditional embeddings such as word2vec and gloVe cannot handle. </p>
+<p>The <code>embed</code> function is really just a wrapper around
+<code>map(fasttext.get_word_vector, yourData)</code>.</p>
 <h3 id="clustering">Clustering</h3>
 <p>Ward linkage is chosen as the default mechanism for clustering the numeric
 vectors generated in the embedding stage. This creates a dendrogram containing
@@ -136,6 +138,8 @@ However, it is very good for generating clusters for use in creating a
 hierarchy. At a given depth the <code>cluster()</code> function will return which points
 have been clustered at that point, including all of those which are still
 singletons. </p>
+<p><code>cluster</code> makes use of scipy's linkage function and the associated functions for
+obtaining the clusters.</p>
 <h3 id="label-selection">Label Selection</h3>
 <p>Following the clustering stage a label is selected using the optimus approach.</p>
 <ol>
