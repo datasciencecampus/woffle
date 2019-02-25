@@ -5,7 +5,7 @@ currentMenu: sentiment
 # Sentiment Analysis
 
 The current implementation uses the rudamentary functionality
-available in the `TextBlob` python package.The `embed` function 
+available in the `TextBlob` python package. The `embed` function 
 uses polarity to assign scores to strings which then can be used in
 conjunction with clustering or other techniques. 
 
