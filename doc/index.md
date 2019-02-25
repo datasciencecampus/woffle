@@ -24,7 +24,7 @@ NLP projects generally consist of up to 4 tasks.
 2. **Embedding**
     Because computers are really bad at understanding language we come
     pre-packed with various ways of converting all of that text into numbers so
-    that youre computer can do stuff. This can sometimes seem like a contrivance
+    that your computer can do stuff. This can sometimes seem like a contrivance
     where we consider sentiment scores for text as an 'embedding' but all we
     mean is "generating a numeric representation for text" and this hopefully
     follows.
