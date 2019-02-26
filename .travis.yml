@@ -14,13 +14,13 @@ addons:
 
 # do the install, but only almost all because otherwise it takes hours
 install:
-  - make 
+  - make
 
 # check all branches
 branches:
   only:
 #    - gh-pages
-    - develop
+    - master
 
 script:
   - make test
