@@ -32,7 +32,7 @@ proc = spacy.load(config['spacy']['model'])
 
 
 def roots(tokens : Doc) -> List[str]:
-    return [i for i in filter (lambda x: x.dep_ == 'ROOT', tokens)]
+    return [i for i in filter (lambda x: x.dep_ == 'ROOT', tokens)][0]
 
 #+TODO: first is here for when you don't want to/cannot do NER, currently there
 #       no NER so it is the default target selector

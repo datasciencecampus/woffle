@@ -10,6 +10,7 @@ Pipfile.lock
 __pycache__
 .pyre
 .couscous
+.hypothesis
 
 
 # wildcards
