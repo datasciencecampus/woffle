@@ -5,16 +5,6 @@ yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)  [![Build Status](https://travis-ci.com/datasciencecampus/woffle.svg?branch=develop)](https://travis-ci.com/datasciencecampus/woffle)
 
 
-As a follow on from [optimus](https://github.com/datasciencecampus/optimus) this
-will allow extension of the work to include
-arbitrary user defined means of processing their text. The initial aim of this
-is to turn optimus from the sprawling tangle of classes that it is into a pure
-as possible functional program.
-
-Eventually it will be a way to tie together all your NLP tasks and give you the
-option to use whatever back end you like but through a common interface.
-
-
 ## Introduction
 
 `woffle` is a project template which aims to allows you to compose various NLP
