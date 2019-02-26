@@ -23,4 +23,4 @@ branches:
     - master
 
 script:
-  - make test || cat setup.log
+  - make test
