@@ -2,7 +2,7 @@
 
 [![Project Status: WIP – Initial development is in progress, but there has not
 yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)[![Build Status](https://travis-ci.com/datasciencecampus/woffle.svg?branch=develop)](https://travis-ci.com/datasciencecampus/woffle)
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)  [![Build Status](https://travis-ci.com/datasciencecampus/woffle.svg?branch=develop)](https://travis-ci.com/datasciencecampus/woffle)
 
 
 Please note that this is an active project so some of the instructions are
