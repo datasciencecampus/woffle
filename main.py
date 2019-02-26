@@ -23,14 +23,9 @@ def main():
         # we also use this instead of .readlines() because it doesn't give \n
 
     target = parse(text)
-    embedding = list(embed(target))  ## TODO: ward linkage doesn't currently take a map
-    clusters = cluster(embedding, target, 7)
+    embedding = list(embed(target))  # linkage cannot use an iterator
+    clusters = cluster(embedding, 5)
     labels = select(text, clusters)
-
-    ## TODO: I think clusters should be numeric representation of the cluster that the
-    ## position in the original text belongs to rather than the list of clusters
-    ## themselves as this makes it very hard to reverse to apply the label to the
-    ## original input
 
     for t, l in zip(text, labels):
         print(f"{t:>30s}: {l}")

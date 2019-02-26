@@ -20,8 +20,8 @@ END=⌁ \${BOLD}${GREEN}COMPLETE:${NONE}
 
 #-- General ---------------------------------------------------------------------
 .PHONY: all almost py test ft flair spacy bert
-all: clean py ft ftmodel flair spacy
-almost: clean py ft flair spacy
+all: clean py ft ftmodel spacy wordnet
+almost: clean py ft spacy wordnet
 
 clean:
 	@printf "${START} Cleaning"
@@ -44,14 +44,9 @@ check:
 	@pyre --search-path . check
 	@printf "${END} Completed type checks\n"
 
-test:
-	@printf "${END} Tests pending first rc or an uptake on PRs"
-
-
 #-- Task themes -----------------------------------------------------------------
 clustering: py ft ftmodel spacy
 sentiment: py flair spacy
-
 
 #-- Package installation --------------------------------------------------------
 py:
@@ -89,8 +84,15 @@ flair-fast:
 
 spacy:
 	@printf "${START} Installing: spacy"
-	@pip install spacy 1>>$(LOGFILE)
+	@pip install spacy  1>>$(LOGFILE)
 	@python -m spacy download en_core_web_md  1>>$(LOGFILE)
+	@printf "\r${END} spacy    \n"
+
+wordnet:
+	@printf "${START} Installing: wordnet"
+	@pip install spacy-wordnet  1>>$(LOGFILE)
+	@python -m nltk.downloader wordnet 1>>$(LOGFILE)
+	@python -m nltk.downloader omw 1>>$(LOGFILE)
 	@printf "\r${END} spacy    \n"
 
 bert:
@@ -99,3 +101,12 @@ bert:
 	@printf "\r${END} bert    \n"
 
 # end
+
+#-- Testing and CI --------------------------------------------------------------
+
+ci: almost test
+
+test:
+	@printf "${START} Running tests \n"
+	@python -m pytest
+	@printf "\r${END} test    \n"

@@ -30,6 +30,5 @@ def fetch(depth: float, links: Array) -> Array:
     return clus.fcluster(links, depth, criterion="distance")
 
 
-#+TODO: figure out how this works and make it nicer
-def cluster(embedding: Array, xs: [str], depth: float) -> List[Array]:
+def cluster(embedding: Array, depth: float) -> Array:
     return fetch(depth, z(embedding))

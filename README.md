@@ -2,7 +2,7 @@
 
 [![Project Status: WIP – Initial development is in progress, but there has not
 yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)  [![Build Status](https://travis-ci.com/datasciencecampus/woffle.svg?branch=develop)](https://travis-ci.com/datasciencecampus/woffle)
 
 
 Please note that this is an active project so some of the instructions are
@@ -68,11 +68,6 @@ These functions will be called the same thing regardless of which back end you
 use and most importantly they will be composable so that you can chain
 deterministic and probabilistic functions together, where it makes sense.
 
-A type checking tool ([pyre](https://pyre-check.org)) will be available to
-ensure that any custom pipelines have functions of the same type before the
-program runs to prevent any late exceptions being raised. This is currently not
-yet implemented but is in the immediate tasks to perform.
-
 
 ## Installation
 
@@ -83,7 +78,7 @@ in Windows I don't believe that there is a reason it should not work.
 
 
 The standard installation, including an installation of fasttext (but without a
-model), flair and spacy looks like:
+model) and spacy looks like:
 
 ``` sh
 git clone https://github.com/datasciencecampus/woffle
@@ -97,11 +92,45 @@ If you also wish to download the `wiki.en.zip` vectors for fasttext then add:
 make ftmodel
 ```
 
-and if you do not have a CUDA enabled GPU then you may wish to use the flair
+and if you do not have a CUDA enabled GPU then you may wish to use the flair-fast
 models which are optimised for running on CPUs instead:
 
 ``` sh
 make flair-fast
+```
+
+else just install 
+
+``` sh
+make flair
+```
+
+If you'd like to use the [pytorch-pretrained-BERT](https://github.com/huggingface/pytorch-pretrained-BERT) 
+embeddings, run:
+
+``` sh
+make bert
+``` 
+Please note the implementation of these embeddings is experimental and fairly simplistic 
+however it conforms to the overall woffle standard of use and is accessible in the same way 
+as other embeddings. 
+
+
+## Tests
+
+Currently the repository is in WIP. There are rudimentary tests set up for a variety
+of components and CI is set up on Travis. The status of the build can be seen on the
+badge at the top of this README. 
+
+If you would like to run tests yourself, you can use any of the following commands:
+
+``` sh
+make 
+make test
+
+# ---- OR ---- 
+
+make ci
 ```
 
 
