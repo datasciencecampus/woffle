@@ -64,7 +64,7 @@ endif
 
 ftmodel:
 	@printf "${START} Installing: download fasttext model"
-	@curl -o models/wiki.en.zip https://s3-us-west-1.amazonaws.com/fasttext-vectors/wiki.en.zip 2>setup.log
+	@curl -o models/wiki.en.zip https://s3-us-west-1.amazonaws.com/fasttext-vectors/wiki.en.zip 2>$(LOGFILE)
 	@printf "\r${END} download fasttext model    \n"
 
 flair:
