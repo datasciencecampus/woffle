@@ -18,6 +18,6 @@ import woffle.cluster.deter.cluster as dcluster
        st.integers(min_value=1)
 )
 def test_dcluster(arr, d):
-    result = dcluster(arr, [], d)
+    result = dcluster(arr, d)
     
     assert hasattr(result,"__iter__") 
