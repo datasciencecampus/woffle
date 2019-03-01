@@ -16,6 +16,7 @@ def plot(array):
     plt.scatter(array[:,1], array[:,0])
     plt.show()
 
+
 def main():
     """
     This function is where we build our pipeline to create the embeddings from an
@@ -33,6 +34,7 @@ def main():
 
     # Return scores and cluster labels
     return np.array(list(zip(scores, clusters)))
+
 
 # -- Boilerplate ----------------------------------------------------------------
 if __name__ == "__main__":

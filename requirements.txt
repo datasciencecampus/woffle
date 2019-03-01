@@ -3,3 +3,4 @@ textacy
 pyre-check
 pytest
 hypothesis
+textblob
