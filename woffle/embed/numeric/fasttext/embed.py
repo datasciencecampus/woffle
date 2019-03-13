@@ -15,10 +15,6 @@ from typing import List, NewType
 import fastText
 import toml
 
-# project
-from woffle.functions.generics import compose
-from woffle.functions.generics import id
-
 
 #-- Type synonyms ---------------------------------------------------------------
 Model = NewType('Model', fastText.FastText._FastText)
