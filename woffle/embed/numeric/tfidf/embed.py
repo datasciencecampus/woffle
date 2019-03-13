@@ -18,7 +18,7 @@ import numpy as np
 #-- Functions -------------------------------------------------------------------
 
 def embed(xs : List[str]) -> List[float]:
-    v = textacy.vsm.Vectorizer(apply_idf=True, norm='l2')
+    v = textacy.vsm.Vectorizer(apply_idf=True)
     xs_ = [x.split() for x in xs]
-    intermediary = v.fit_transform(xs_)
+    intermediary = v.fit_transform(xs_).todense()
     return [np.array(i) for i in intermediary]
